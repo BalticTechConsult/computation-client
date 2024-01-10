@@ -1,0 +1,38 @@
+{
+  "name": "@baltictechconsult/computation-client",
+  "title": "Computation Client",
+  "description": "Computation Client implementation",
+  "version": "0.0.1",
+  "private": true,
+  "author": "BalticTechConsult",
+  "license": "(MIT OR Apache-2.0)",
+  "scripts": {
+    "build": "vite build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.2.1",
+    "socketcluster-client": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.0"
+  },
+  "source": "src/index.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "type": "module",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  }
+}
