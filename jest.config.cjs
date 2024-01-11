@@ -6,6 +6,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFiles: ['dotenv/config'],
   moduleNameMapper: {
-     "^@/(.*)": "<rootDir>/src/$1"
+    "^@/(.*)": "<rootDir>/src/$1"
   }
 }
