@@ -101,7 +101,7 @@ export class Settings implements iSettings {
   @Expose()
   @IsOptional()
   @IsInt()
-  @Default(3)
+  @Default(1)
   @Min(1)
   @IsLessOrEqualThan('minPir', { message: 'High priority max route index have to be less or equal than minimum points in route' })
   fmri?: number
@@ -115,35 +115,8 @@ export class Settings implements iSettings {
   @Expose()
   @IsOptional()
   @IsInt()
-  @Default(3)
+  @Default(1)
   @Min(1)
   @IsLessOrEqualThan('minPir', { message: 'Low priority max route index have to be less or equal than minimum points in route' })
   lmri?: number
-
-  /**
-  * Create Settings from plain object
-  * @param {unknown} plain - plain object
-  * @returns {Settings}
-  * @internal
-  */
-  static fromPlain = (plain: unknown): Settings => plainToClass(Settings, plain)
-
-  /**
-  * Validate Settings
-  * @param {Settings} input - Settings to validate
-  * @returns {true | never}
-  * @throws {TypeError}
-  * @internal
-  */
-  static validate = (input: Settings): true | never => {
-    const errors = validateSync(input)
-
-    if (!!errors.length) {
-      console.error(errors)
-
-      throw new TypeError('Settings validation error!')
-    }
-
-    return true
-  }
 }

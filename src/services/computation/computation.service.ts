@@ -1,6 +1,7 @@
 import { AGClientSocket, create } from 'socketcluster-client'
 
-import { iConnectionParams, ConnectionParams } from '@/models'
+import { iConnectionParams, ConnectionParams, Task, iTask } from '@/models'
+import { REGISTER_TASK_PROCEDURE, UNREGISTER_TASK_PROCEDURE } from '@/consts'
 
 
 /**
@@ -91,4 +92,22 @@ export class ComputationService {
     this.socket.disconnect()
   }
 
+  /**
+  * Register task.
+  * @param {iTask|Task} task - Task.
+  * @returns {Promise<string>} - Task id.
+  * @throws {Error}
+  */
+  registerTask = async (task: iTask | Task): Promise<string> | never => {
+    return await this.socket.invoke(REGISTER_TASK_PROCEDURE, task)
+  }
+
+  /**
+  * Unregister task.
+  * @param {string} taskId - Task id.
+  * @returns {Promise<void>}
+  * @throws {Error}
+  */
+  unregisterTask = async (taskId: string): Promise<void> | never =>
+    await this.socket.invoke(UNREGISTER_TASK_PROCEDURE, { taskId })
 }
