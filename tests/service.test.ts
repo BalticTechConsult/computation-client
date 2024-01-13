@@ -48,11 +48,11 @@ describe('testing ComputationService', () => {
     try {
       await service.unregisterTask(taskId)
     } catch (error) {
-      console.error(error)
       expect(error).toBe(null)
     }
 
     expect(taskId).not.toBe('')
+    expect(typeof taskId).toBe('string')
   })
 
 
