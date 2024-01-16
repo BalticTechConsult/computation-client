@@ -1,13 +1,13 @@
 import { AGClientSocket, create } from 'socketcluster-client'
 
-import { iConnectionParams, ConnectionParams, Task, iTask } from '@/models'
-import { REGISTER_TASK_PROCEDURE, UNREGISTER_TASK_PROCEDURE } from '@/consts'
+import { iConnectionParams, ConnectionParams, Task, iTask, Solution } from '@/models'
+import { eRPC } from '@/consts'
 
 
 /**
-* Computation service.
+* Computation client.
 */
-export class ComputationService {
+export class ComputationClient {
   /**
   * Connection parameters.
   * @type {ConnectionParams}
@@ -34,13 +34,13 @@ export class ComputationService {
   }
 
   /**
-  * Check if connected to computation service.
+  * Check if connected to computation broker.
   * @returns {boolean}
   */
   isConnected = (): boolean => this.socket.state === this.socket.OPEN
 
   /**
-  * Connect to computation service.
+  * Connect to computation broker.
   * @returns {Promise<boolean>}
   */
   async connect(): Promise<boolean> {
@@ -48,15 +48,15 @@ export class ComputationService {
       const { hostname, port, path, protocolVersion, logs } = this.params
 
       setTimeout(() => {
-        logs && console.error('Failed to connect to computation service.')
+        logs && console.error('Failed to connect to computation broker.')
 
-        reject('Failed to connect to computation service.')
+        reject('Failed to connect to computation broker.')
       }, 10000)
 
       ;(async () => {
         for await (let status of this.socket.listener('connect')) {
           if (this.isConnected()) {
-            logs && console.log('Connected to computation service.')
+            logs && console.log('Connected to computation broker.')
 
             resolve(true)
             break
@@ -85,7 +85,7 @@ export class ComputationService {
   }
 
   /**
-  * Disconnect from computation service.
+  * Disconnect from computation broker.
   * @returns {void}
   */
   disconnect = (): void => {
@@ -95,19 +95,35 @@ export class ComputationService {
   /**
   * Register task.
   * @param {iTask|Task} task - Task.
-  * @returns {Promise<string>} - Task id.
+  * @returns {Promise<string | never>} - Task id.
   * @throws {Error}
   */
-  registerTask = async (task: iTask | Task): Promise<string> | never => {
-    return await this.socket.invoke(REGISTER_TASK_PROCEDURE, task)
+  registerTask = async (task: iTask | Task): Promise<string | never> => {
+    return await this.socket.invoke(eRPC.REGISTER_TASK, task)
   }
 
   /**
   * Unregister task.
   * @param {string} taskId - Task id.
-  * @returns {Promise<void>}
+  * @returns {Promise<void | never>}
   * @throws {Error}
   */
-  unregisterTask = async (taskId: string): Promise<void> | never =>
-    await this.socket.invoke(UNREGISTER_TASK_PROCEDURE, { taskId })
+  unregisterTask = async (taskId: string): Promise<void | never> =>
+    await this.socket.invoke(eRPC.UNREGISTER_TASK, { taskId })
+
+  /**
+  * Get top 10 solutions
+  * @param {string} taskId - Task id
+  * @returns {Promise<Solution[] | never>}
+  * @throws {Error}
+  */
+  getTopSolutions = async (taskId: string): Promise<Solution[] | never> => {
+    const maybeSolutions = await this.socket.invoke(eRPC.GET_TOP_SOLUTIONS, { taskId })
+
+    if (!Array.isArray(maybeSolutions)) {
+      return []
+    }
+
+    return maybeSolutions.map((maybeSolution) => Solution.fromPlain(maybeSolution))
+  }
 }

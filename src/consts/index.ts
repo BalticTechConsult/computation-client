@@ -1,2 +1,2 @@
 export * from './protocol-version'
-export * from './remote-call-procedures.consts'
+export * from './rpc.consts'

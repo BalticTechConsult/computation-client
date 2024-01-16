@@ -1,3 +1,3 @@
 export * from './consts'
 export * from './models'
-export * from './services'
+export * from './computation-client'

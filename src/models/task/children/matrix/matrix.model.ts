@@ -1,7 +1,5 @@
-import { ArrayNotEmpty, IsArray, IsDefined, IsInt, Validate, validateSync } from 'class-validator'
-import { Expose, plainToClass } from 'class-transformer'
-
-import { IsValidMatrix } from './validators'
+import { ArrayNotEmpty, IsArray, IsDefined } from 'class-validator'
+import { Expose } from 'class-transformer'
 
 
 /**
@@ -32,6 +30,5 @@ export class Matrix implements iMatrix {
   @IsArray()
   @IsArray({ each: true })
   @ArrayNotEmpty()
-  @Validate(IsValidMatrix, { message: 'Matrix must be square and have at least one element, and every element must be a number or null!' })
   values: number[][]
 }
