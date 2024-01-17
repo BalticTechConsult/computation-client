@@ -1,4 +1,4 @@
-import { Equals, IsDefined, ValidateNested, validateSync } from 'class-validator'
+import { Equals, IsArray, IsDefined, ValidateNested, validateSync } from 'class-validator'
 import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
@@ -9,9 +9,9 @@ import { iSettings, Settings } from '../settings'
 
 
 /**
-* Task
+* Optimization Task
 */
-export interface iTask {
+export interface iOptimizationTask {
   /**
   * Task settings
   * @type {iSettings}
@@ -31,6 +31,12 @@ export interface iTask {
   priority: iPriority
 
   /**
+  * Array of routes
+  * @type {number[][]}
+  */
+  routes: number[][]
+
+  /**
   * Task version
   * @type {number}
   */
@@ -38,9 +44,9 @@ export interface iTask {
 }
 
 /**
-* Task
+* Optimization Task
 */
-export class Task implements iTask {
+export class OptimizationTask implements iOptimizationTask {
   /**
   * Task settings
   * @type {Settings}
@@ -72,6 +78,15 @@ export class Task implements iTask {
   priority: Priority
 
   /**
+  * Array of routes
+  * @type {number[][]}
+  */
+  @Expose()
+  @IsDefined()
+  @IsArray()
+  routes: number[][]
+
+  /**
   * Task version
   * @type {number}
   */
@@ -82,25 +97,25 @@ export class Task implements iTask {
   version: 1
 
   /**
-  * Create Task from plain object
+  * Create OptimizationTask from plain object
   * @param {unknown} plain - plain object
   * @returns {Task}
   * @internal
   */
-  static fromPlain = (plain: unknown): Task => plainToClass(Task, plain)
+  static fromPlain = (plain: unknown): OptimizationTask => plainToClass(OptimizationTask, plain)
 
   /**
-  * Validate Task
-  * @param {Task} input - Task to validate
+  * Validate OptimizationTask
+  * @param {Task} input - OptimizationTask to validate
   * @returns {true | never}
   * @throws {TypeError}
   * @internal
   */
-  static validate = (input: Task): true | never => {
+  static validate = (input: OptimizationTask): true | never => {
     const errors = validateSync(input)
 
     if (!!errors.length) {
-      throw new ModelError('Task validation error!', errors)
+      throw new ModelError('OptimizationTask validation error!', errors)
     }
 
     return true

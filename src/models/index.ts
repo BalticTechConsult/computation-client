@@ -1,3 +1,7 @@
 export * from './connection-params'
+export * from './matrix'
+export * from './optimization-task'
+export * from './priority'
+export * from './settings'
 export * from './solution'
 export * from './task'

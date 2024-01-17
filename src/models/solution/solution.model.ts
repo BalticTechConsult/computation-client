@@ -1,7 +1,8 @@
-import { Equals, IsArray, IsDefined, IsInt, IsString } from 'class-validator'
+import { Equals, IsArray, IsDefined, IsInt, IsString, validateSync } from 'class-validator'
 import { Expose, plainToClass } from 'class-transformer'
 
 import { Default } from '@/decorators'
+import { ModelError } from '@/errors'
 
 
 /**
@@ -83,4 +84,21 @@ export class Solution implements iSolution {
   * @internal
   */
   static fromPlain = (plain: unknown): Solution => plainToClass(Solution, plain)
+
+  /**
+  * Validate Solution
+  * @param {Solution} input - Settings to validate
+  * @returns {true | never}
+  * @throws {TypeError}
+  * @internal
+  */
+  static validate = (input: Solution): true | never => {
+    const errors = validateSync(input)
+
+    if (!!errors.length) {
+      throw new ModelError('Solution validation error!', errors)
+    }
+
+    return true
+  }
 }
