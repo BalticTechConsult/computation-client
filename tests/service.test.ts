@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { ComputationClient } from '@/index'
+import { ComputationClient, Solution } from '@/index'
 import { eProtocolVersion, isProtocolVersion } from '@/consts'
 import { iTask } from '@/models'
 import { readFileSync } from 'node:fs'
@@ -27,6 +27,7 @@ describe('testing ComputationService', () => {
   const filename = __dirname + '/test-data/matrix-1.json'
   const matrix1: number[][] = JSON.parse(readFileSync(filename, 'utf8'))
   const priority: number[] = Array.from({ length: matrix1.length }, () => 0)
+  let solutions: Solution[] = []
 
   const task: iTask = {
     version: 1,
@@ -49,26 +50,53 @@ describe('testing ComputationService', () => {
     expect(service.isConnected()).toBe(true)
   })
 
-  test('task registration', async () => {
-    let taskId: string = ''
+  let taskId: string = ''
+  let optimizationTaskId: string = ''
 
+  test('task registration', async () => {
     try {
       taskId = await service.registerTask(task)
+
+      // wait for tasks to be processed
+      await nop(1000)
     } catch (error) {
       expect(error).toBe(null)
     }
+  })
 
-    // wait for task to be processed
-    await nop(4000)
-
+  test('get task solutions', async () => {
     try {
-      const solutions = await service.getTopSolutions(taskId)
+      solutions = await service.getTopSolutions(taskId)
 
-      expect(Array.isArray(solutions)).toBe(true)
+      expect(solutions.length).toBeGreaterThan(0)
     } catch (error) {
       expect(error).toBe(null)
     }
+  })
 
+  test('optimization task registration', async () => {
+    try {
+      optimizationTaskId = await service.registerOptimizationTask({ ...task, routes: solutions[0].solution })
+
+      // wait for tasks to be processed
+      await nop(1000)
+    } catch (error) {
+      expect(error).toBe(null)
+    }
+  })
+
+
+  test('get optimization task solutions', async () => {
+    try {
+      solutions = await service.getOptimizationSolutions(optimizationTaskId)
+
+      expect(solutions.length).toBeGreaterThan(0)
+    } catch (error) {
+      expect(error).toBe(null)
+    }
+  })
+
+  test('task unregistration', async () => {
     try {
       await service.unregisterTask(taskId)
     } catch (error) {
@@ -76,9 +104,17 @@ describe('testing ComputationService', () => {
     }
 
     expect(taskId).not.toBe('')
-    expect(typeof taskId).toBe('string')
   })
 
+  test('optimization task unregistration', async () => {
+    try {
+      await service.unregisterOptimizationTask(optimizationTaskId)
+    } catch (error) {
+      expect(error).toBe(null)
+    }
+
+    expect(optimizationTaskId).not.toBe('')
+  })
 
   test('disconnection from computation service', async () => {
     service.disconnect()
