@@ -2,8 +2,7 @@
   "name": "@baltictechconsult/computation-client",
   "title": "Computation Client",
   "description": "Computation Client implementation",
-  "version": "0.0.8",
-  "private": true,
+  "version": "0.0.9",
   "author": "BalticTechConsult",
   "license": "(MIT OR Apache-2.0)",
   "scripts": {
@@ -34,6 +33,7 @@
   "type": "module",
   "exports": {
     "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    "require": "./dist/index.cjs",
+    "types": "./dist/types/index.d.ts"
   }
 }
