@@ -1,9 +1,8 @@
 import 'reflect-metadata'
 import { readFileSync } from 'node:fs'
 
-import { ComputationClient, Solution } from '@/index'
+import { ComputationClient, eTaskType, OptimizationTask, Solution, Task } from '@/index'
 import { eProtocolVersion, isProtocolVersion } from '@/consts'
-import { iTask } from '@/models'
 
 
 const nop = (delay: number = 1000): Promise<void> => {
@@ -29,8 +28,7 @@ describe('testing ComputationService', () => {
   const priority: number[] = Array.from({ length: matrix1.length }, () => 0)
   let solutions: Solution[] = []
 
-  const task: iTask = {
-    version: 1,
+  const task = Task.fromPlain({
     settings: {
       maxPir: 10,
       minPir: 1,
@@ -41,8 +39,10 @@ describe('testing ComputationService', () => {
     },
     priority: {
       list: priority,
-    }
-  }
+    },
+    taskType: eTaskType.TASK,
+    version: 1,
+  })
 
   test('connection to computation service', async () => {
     await service.connect()
@@ -66,7 +66,7 @@ describe('testing ComputationService', () => {
 
   test('get task solutions', async () => {
     try {
-      solutions = await service.getTopSolutions(taskId)
+      solutions = await service.getSolutions(taskId)
 
       expect(solutions.length).toBeGreaterThan(0)
     } catch (error) {
@@ -76,7 +76,24 @@ describe('testing ComputationService', () => {
 
   test('optimization task registration', async () => {
     try {
-      optimizationTaskId = await service.registerOptimizationTask({ ...task, routes: solutions[0].solution })
+      const optimizationTask = OptimizationTask.fromPlain({
+        settings: {
+          maxPir: 10,
+          minPir: 1,
+          routes: 1,
+        },
+        matrix: {
+          values: matrix1,
+        },
+        priority: {
+          list: priority,
+        },
+        routes: solutions[0].solution,
+        taskType: eTaskType.OPTIMIZATION_TASK,
+        version: 1,
+      })
+
+      optimizationTaskId = await service.registerTask(optimizationTask)
 
       // wait for tasks to be processed
       await nop(1000)
@@ -88,7 +105,7 @@ describe('testing ComputationService', () => {
 
   test('get optimization task solutions', async () => {
     try {
-      solutions = await service.getOptimizationSolutions(optimizationTaskId)
+      solutions = await service.getSolutions(optimizationTaskId)
 
       expect(solutions.length).toBeGreaterThan(0)
     } catch (error) {
@@ -108,7 +125,7 @@ describe('testing ComputationService', () => {
 
   test('optimization task unregistration', async () => {
     try {
-      await service.unregisterOptimizationTask(optimizationTaskId)
+      await service.unregisterTask(optimizationTaskId)
     } catch (error) {
       expect(error).toBe(null)
     }

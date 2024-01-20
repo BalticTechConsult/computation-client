@@ -3,15 +3,27 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
-import { iMatrix, Matrix } from '../matrix'
-import { iPriority, Priority } from '../priority'
-import { iSettings, Settings } from '../settings'
+import { aTask } from '../task.abstract'
+import { iMatrix, iPriority, iSettings, Matrix, Priority, Settings } from './children'
+import { eTaskType } from './consts'
 
 
 /**
 * Task
 */
-export interface iTask {
+export interface iPreciseTask extends aTask {
+  /**
+  * Task Type
+  * @type {eTaskType.PRECISE_TASK}
+  */
+  taskType: eTaskType.PRECISE_TASK
+
+  /**
+  * Task version
+  * @type {number}
+  */
+  version: 1
+
   /**
   * Task settings
   * @type {iSettings}
@@ -29,18 +41,31 @@ export interface iTask {
   * @type {iPriority}
   */
   priority: iPriority
-
-  /**
-  * Task version
-  * @type {number}
-  */
-  version: 1
 }
 
 /**
 * Task
 */
-export class Task implements iTask {
+export class PreciseTask extends aTask implements iPreciseTask {
+  /**
+  * Task Type
+  * @type {eTaskType.PRECISE_TASK}
+  */
+  @Expose()
+  @Equals(eTaskType.PRECISE_TASK)
+  @Default(eTaskType.PRECISE_TASK)
+  taskType: eTaskType.PRECISE_TASK
+
+  /**
+  * Task version
+  * @type {number}
+  */
+  @Expose()
+  @IsDefined()
+  @Equals(1)
+  @Default(1)
+  version: 1
+
   /**
   * Task settings
   * @type {Settings}
@@ -72,35 +97,25 @@ export class Task implements iTask {
   priority: Priority
 
   /**
-  * Task version
-  * @type {number}
-  */
-  @Expose()
-  @IsDefined()
-  @Equals(1)
-  @Default(1)
-  version: 1
-
-  /**
-  * Create Task from plain object
+  * Create PreciseTask from plain object
   * @param {unknown} plain - plain object
-  * @returns {Task}
+  * @returns {PreciseTask}
   * @internal
   */
-  static fromPlain = (plain: unknown): Task => plainToClass(Task, plain)
+  static fromPlain = (plain: AllowPrimitives<iPreciseTask>): PreciseTask => plainToClass(PreciseTask, plain)
 
   /**
-  * Validate Task
-  * @param {Task} input - Task to validate
+  * Validate PreciseTask
+  * @param {PreciseTask} input - Task to validate
   * @returns {true | never}
   * @throws {TypeError}
   * @internal
   */
-  static validate = (input: Task): true | never => {
+  static validate = (input: PreciseTask): true | never => {
     const errors = validateSync(input)
 
     if (!!errors.length) {
-      throw new ModelError('Task validation error!', errors)
+      throw new ModelError('PreciseTask validation error!', errors)
     }
 
     return true

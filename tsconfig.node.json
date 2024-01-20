@@ -9,6 +9,7 @@
     "resolveJsonModule": true
   },
   "include": [
-    "test.config.ts"
+    "test.config.ts",
+    "types"
   ]
 }

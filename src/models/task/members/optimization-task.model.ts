@@ -3,15 +3,27 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
-import { iMatrix, Matrix } from '../matrix'
-import { iPriority, Priority } from '../priority'
-import { iSettings, Settings } from '../settings'
+import { aTask } from '../task.abstract'
+import { iMatrix, Matrix, iPriority, Priority, iSettings, Settings } from './children'
+import { eTaskType } from './consts'
 
 
 /**
 * Optimization Task
 */
-export interface iOptimizationTask {
+export interface iOptimizationTask extends aTask {
+  /**
+  * Task Type
+  * @type {eTaskType.OPTIMIZATION_TASK}
+  */
+  taskType: eTaskType.OPTIMIZATION_TASK
+
+  /**
+  * Task version
+  * @type {number}
+  */
+  version: 1
+
   /**
   * Task settings
   * @type {iSettings}
@@ -35,18 +47,31 @@ export interface iOptimizationTask {
   * @type {number[][]}
   */
   routes: number[][]
-
-  /**
-  * Task version
-  * @type {number}
-  */
-  version: 1
 }
 
 /**
 * Optimization Task
 */
-export class OptimizationTask implements iOptimizationTask {
+export class OptimizationTask extends aTask implements iOptimizationTask {
+  /**
+  * Task Type
+  * @type {eTaskType.OPTIMIZATION_TASK}
+  */
+  @Expose()
+  @Equals(eTaskType.OPTIMIZATION_TASK)
+  @Default(eTaskType.OPTIMIZATION_TASK)
+  taskType: eTaskType.OPTIMIZATION_TASK
+
+  /**
+  * Task version
+  * @type {number}
+  */
+  @Expose()
+  @IsDefined()
+  @Equals(1)
+  @Default(1)
+  version: 1
+
   /**
   * Task settings
   * @type {Settings}
@@ -86,27 +111,19 @@ export class OptimizationTask implements iOptimizationTask {
   @IsArray()
   routes: number[][]
 
-  /**
-  * Task version
-  * @type {number}
-  */
-  @Expose()
-  @IsDefined()
-  @Equals(1)
-  @Default(1)
-  version: 1
 
   /**
   * Create OptimizationTask from plain object
   * @param {unknown} plain - plain object
-  * @returns {Task}
+  * @returns {OptimizationTask}
   * @internal
   */
-  static fromPlain = (plain: unknown): OptimizationTask => plainToClass(OptimizationTask, plain)
+  static fromPlain = (plain: AllowPrimitives<iOptimizationTask>): OptimizationTask =>
+    plainToClass(OptimizationTask, plain)
 
   /**
   * Validate OptimizationTask
-  * @param {Task} input - OptimizationTask to validate
+  * @param {OptimizationTask} input - OptimizationTask to validate
   * @returns {true | never}
   * @throws {TypeError}
   * @internal

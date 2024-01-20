@@ -1,14 +1,6 @@
 import { AGClientSocket, create } from 'socketcluster-client'
 
-import {
-  iConnectionParams,
-  ConnectionParams,
-  Task,
-  iTask,
-  Solution,
-  iOptimizationTask,
-  OptimizationTask
-} from '@/models'
+import { ConnectionParams, iConnectionParams, iuTask, Solution, uTask } from '@/models'
 import { eRPC } from '@/consts'
 
 
@@ -102,22 +94,12 @@ export class ComputationClient {
 
   /**
   * Register task.
-  * @param {iTask|Task} task - Task.
+  * @param {iuTask | uTask} task - Task.
   * @returns {Promise<string | never>} - Task id.
   * @throws {Error}
   */
-  registerTask = async (task: iTask | Task): Promise<string | never> => {
+  registerTask = async (task: iuTask | uTask): Promise<string | never> => {
     return await this.socket.invoke(eRPC.REGISTER_TASK, task)
-  }
-
-  /**
-  * Register optimization task.
-  * @param {iOptimizationTask|OptimizationTask} task - Task.
-  * @returns {Promise<string | never>} - Task id.
-  * @throws {Error}
-  */
-  registerOptimizationTask = async (task: iOptimizationTask | OptimizationTask): Promise<string | never> => {
-    return await this.socket.invoke(eRPC.REGISTER_OPTIMIZATION_TASK, task)
   }
 
   /**
@@ -130,37 +112,13 @@ export class ComputationClient {
     await this.socket.invoke(eRPC.UNREGISTER_TASK, { taskId })
 
   /**
-  * Unregister optimization task.
-  * @param {string} taskId - Task id.
-  * @returns {Promise<void | never>}
-  * @throws {Error}
-  */
-  unregisterOptimizationTask = async (taskId: string): Promise<void | never> =>
-    await this.socket.invoke(eRPC.UNREGISTER_OPTIMIZATION_TASK, { taskId })
-
-  /**
   * Get top 10 solutions
   * @param {string} taskId - Task id
   * @returns {Promise<Solution[] | never>}
   * @throws {Error}
   */
-  getTopSolutions = async (taskId: string): Promise<Solution[] | never> => {
-    const maybeSolutions = await this.socket.invoke(eRPC.GET_TOP_SOLUTIONS, { taskId })
-
-    if (!Array.isArray(maybeSolutions)) {
-      return []
-    }
-
-    return maybeSolutions.map((maybeSolution) => Solution.fromPlain(maybeSolution))
-  }
-
-  /**
-  * Get top optimization solutions
-  * @param {string} taskId - Task id
-  * @returns {Promise<Solution[] | never>}
-  */
-  getOptimizationSolutions = async (taskId: string): Promise<Solution[] | never> => {
-    const maybeSolutions = await this.socket.invoke(eRPC.GET_TOP_OPTIMIZATION_SOLUTIONS, { taskId })
+  getSolutions = async (taskId: string): Promise<Solution[] | never> => {
+    const maybeSolutions = await this.socket.invoke(eRPC.GET_SOLUTIONS, { taskId })
 
     if (!Array.isArray(maybeSolutions)) {
       return []
