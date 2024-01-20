@@ -3,6 +3,7 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
+import { AllowPrimitives } from '@/types'
 import { aTask } from '../task.abstract'
 import { iMatrix, iPriority, iSettings, Matrix, Priority, Settings } from './children'
 import { eTaskType } from './consts'

@@ -10,6 +10,5 @@
   },
   "include": [
     "test.config.ts",
-    "types"
   ]
 }
