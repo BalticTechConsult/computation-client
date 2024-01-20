@@ -1,9 +1,9 @@
 import 'reflect-metadata'
+import { readFileSync } from 'node:fs'
 
 import { ComputationClient, Solution } from '@/index'
 import { eProtocolVersion, isProtocolVersion } from '@/consts'
 import { iTask } from '@/models'
-import { readFileSync } from 'node:fs'
 
 
 const nop = (delay: number = 1000): Promise<void> => {
