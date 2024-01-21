@@ -3,12 +3,20 @@ import { Expose, plainToClass } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
+import { aSolution } from '../solution.abstract'
+import { eSolutionType } from './consts'
 
 
 /**
-* Computation result
+* Solution
 */
-export interface iSolution {
+export interface iSolution extends aSolution {
+  /**
+  * Solution type
+  * @type {eSolutionType.SOLUTION}
+  */
+  solutionType: eSolutionType.SOLUTION
+
   /**
   * Solution, array of routes
   * @type {number[][]}
@@ -26,18 +34,21 @@ export interface iSolution {
   * @type {string}
   */
   algorithm: string
-
-  /**
-  * Computation result version
-  * @type {number}
-  */
-  version: 1
 }
 
 /**
 * Computation result
 */
 export class Solution implements iSolution {
+  /**
+  * Solution type
+  * @type {eSolutionType.SOLUTION}
+  */
+  @Expose()
+  @Equals(eSolutionType.SOLUTION)
+  @Default(eSolutionType.SOLUTION)
+  solutionType: eSolutionType.SOLUTION
+
   /**
   * Solution, array of routes
   * @type {number[][]}
@@ -65,17 +76,6 @@ export class Solution implements iSolution {
   @Default('unknown')
   @IsString()
   algorithm: string
-
-  /**
-  * Computation result version
-  * @type {number}
-  */
-  @Expose()
-  @IsDefined()
-  @Equals(1)
-  @IsInt()
-  @Default(1)
-  version: 1
 
   /**
   * Create Solution from plain object

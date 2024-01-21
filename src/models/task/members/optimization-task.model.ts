@@ -20,12 +20,6 @@ export interface iOptimizationTask extends aTask {
   taskType: eTaskType.OPTIMIZATION_TASK
 
   /**
-  * Task version
-  * @type {number}
-  */
-  version: 1
-
-  /**
   * Task settings
   * @type {iSettings}
   */
@@ -62,16 +56,6 @@ export class OptimizationTask extends aTask implements iOptimizationTask {
   @Equals(eTaskType.OPTIMIZATION_TASK)
   @Default(eTaskType.OPTIMIZATION_TASK)
   taskType: eTaskType.OPTIMIZATION_TASK
-
-  /**
-  * Task version
-  * @type {number}
-  */
-  @Expose()
-  @IsDefined()
-  @Equals(1)
-  @Default(1)
-  version: 1
 
   /**
   * Task settings

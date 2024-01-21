@@ -41,7 +41,6 @@ describe('testing ComputationService', () => {
       list: priority,
     },
     taskType: eTaskType.TASK,
-    version: 1,
   })
 
   test('connection to computation service', async () => {
@@ -90,7 +89,6 @@ describe('testing ComputationService', () => {
         },
         routes: solutions[0].solution,
         taskType: eTaskType.OPTIMIZATION_TASK,
-        version: 1,
       })
 
       optimizationTaskId = await service.registerTask(optimizationTask)

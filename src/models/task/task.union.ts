@@ -49,7 +49,7 @@ export namespace uTask {
   export function fromPlain(
     plain: AllowPrimitives<iOptimizationTask> | AllowPrimitives<iPreciseTask> | AllowPrimitives<iTask>
   ): uTask {
-    switch (plain.taskType) {
+    switch (plain?.taskType) {
       case eTaskType.OPTIMIZATION_TASK:
         return OptimizationTask.fromPlain(plain as AllowPrimitives<iOptimizationTask>)
       case eTaskType.PRECISE_TASK:
@@ -57,7 +57,7 @@ export namespace uTask {
       case eTaskType.TASK:
         return Task.fromPlain(plain)
       default:
-        throw new Error(`Unknown task type: ${plain.taskType}`)
+        throw new Error(`Unknown task type.`)
     }
   }
 
@@ -65,7 +65,7 @@ export namespace uTask {
   * Validate uTask
   * @param {uTask} task - uTask
   * @returns {true | never}
-  * @throws {ModelError}
+  * @throws {ModelError | Error}
   */
   export function validate(task: uTask): true | never {
     switch (task.taskType) {

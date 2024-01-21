@@ -1,6 +1,6 @@
 import { AGClientSocket, create } from 'socketcluster-client'
 
-import { ConnectionParams, iConnectionParams, iuTask, Solution, uTask } from '@/models'
+import { ConnectionParams, iConnectionParams, iuTask, Solution, uSolution, uTask } from '@/models'
 import { eRPC } from '@/consts'
 
 
@@ -26,6 +26,7 @@ export class ComputationClient {
   * Constructor
   * @param {iConnectionParams} params - Connection parameters.
   * @constructor
+  * @throws {TypeError}
   */
   constructor(params: iConnectionParams) {
     this.params = ConnectionParams.fromPlain(params)
@@ -114,16 +115,16 @@ export class ComputationClient {
   /**
   * Get top 10 solutions
   * @param {string} taskId - Task id
-  * @returns {Promise<Solution[] | never>}
+  * @returns {Promise<uSolution[] | never>}
   * @throws {Error}
   */
-  getSolutions = async (taskId: string): Promise<Solution[] | never> => {
+  getSolutions = async (taskId: string): Promise<uSolution[] | never> => {
     const maybeSolutions = await this.socket.invoke(eRPC.GET_SOLUTIONS, { taskId })
 
     if (!Array.isArray(maybeSolutions)) {
       return []
     }
 
-    return maybeSolutions.map((maybeSolution) => Solution.fromPlain(maybeSolution))
+    return maybeSolutions.map((maybeSolution) => uSolution.fromPlain(maybeSolution))
   }
 }

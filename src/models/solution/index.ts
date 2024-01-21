@@ -1,1 +1,2 @@
-export * from './solution.model'
+export * from './members'
+export * from './solution.union'

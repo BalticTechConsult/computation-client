@@ -7,10 +7,4 @@ export abstract class aTask {
   * @type {eTaskType}
   */
   taskType: eTaskType
-
-  /**
-  * Task version
-  * @type {number}
-  */
-  version: number
 }
