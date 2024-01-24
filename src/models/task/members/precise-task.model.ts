@@ -5,7 +5,7 @@ import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
 import { AllowPrimitives } from '@/types'
 import { aTask } from '../task.abstract'
-import { iMatrix, iPriority, iSettings, Matrix, Priority, Settings } from './children'
+import { iMatrix, iPoint, iPriority, iSettings, Matrix, Point, Priority, Settings } from './children'
 import { eTaskType } from './consts'
 
 
@@ -36,6 +36,12 @@ export interface iPreciseTask extends aTask {
   * @type {iPriority}
   */
   priority: iPriority
+
+  /**
+  * Points
+  * @type {iPoint[]}
+  */
+  points: iPoint[]
 }
 
 /**
@@ -80,6 +86,16 @@ export class PreciseTask extends aTask implements iPreciseTask {
   @Type(() => Priority)
   @ValidateNested()
   priority: Priority
+
+  /**
+  * Points
+  * @type {Point[]}
+  */
+  @Expose()
+  @IsDefined()
+  @Type(() => Point)
+  @ValidateNested({ each: true })
+  points: Point[]
 
   /**
   * Create PreciseTask from plain object
