@@ -53,7 +53,7 @@ export namespace uTask {
       case eTaskType.OPTIMIZATION_TASK:
         return OptimizationTask.fromPlain(plain as AllowPrimitives<iOptimizationTask>)
       case eTaskType.PRECISE_TASK:
-        return PreciseTask.fromPlain(plain)
+        return PreciseTask.fromPlain(plain as AllowPrimitives<iPreciseTask>)
       case eTaskType.TASK:
         return Task.fromPlain(plain)
       default:
