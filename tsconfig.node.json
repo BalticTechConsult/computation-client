@@ -3,7 +3,7 @@
     "composite": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "es5",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
