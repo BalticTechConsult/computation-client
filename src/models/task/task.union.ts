@@ -1,4 +1,3 @@
-import { AllowPrimitives } from '@/types'
 import { eTaskType, iOptimizationTask, iPreciseTask, iTask, OptimizationTask, PreciseTask, Task } from './members'
 
 
@@ -43,17 +42,17 @@ export type iuTask =
 export namespace uTask {
   /**
   * Create uTask from plain object
-  * @param {AllowPrimitives<iOptimizationTask> | AllowPrimitives<iPreciseTask> | AllowPrimitives<iTask>} plain - plain object
+  * @param {iOptimizationTask | iPreciseTask | iTask} plain - plain object
   * @returns {uTask}
   */
   export function fromPlain(
-    plain: AllowPrimitives<iOptimizationTask> | AllowPrimitives<iPreciseTask> | AllowPrimitives<iTask>
+    plain: iOptimizationTask | iPreciseTask | iTask
   ): uTask {
     switch (plain?.taskType) {
       case eTaskType.OPTIMIZATION_TASK:
-        return OptimizationTask.fromPlain(plain as AllowPrimitives<iOptimizationTask>)
+        return OptimizationTask.fromPlain(plain)
       case eTaskType.PRECISE_TASK:
-        return PreciseTask.fromPlain(plain as AllowPrimitives<iPreciseTask>)
+        return PreciseTask.fromPlain(plain)
       case eTaskType.TASK:
         return Task.fromPlain(plain)
       default:

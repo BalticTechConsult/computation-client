@@ -90,11 +90,11 @@ export class ConnectionParams implements iConnectionParams {
 
   /**
   * Create ConnectionParams from plain object
-  * @param {unknown} plain - plain object
+  * @param {iConnectionParams} plain - plain object
   * @returns {ConnectionParams}
   * @internal
   */
-  static fromPlain = (plain: unknown): ConnectionParams => plainToClass(ConnectionParams, plain)
+  static fromPlain = (plain: iConnectionParams): ConnectionParams => plainToClass(ConnectionParams, plain)
 
   /**
   * Validate ConnectionParams

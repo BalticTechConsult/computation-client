@@ -83,7 +83,7 @@ export class Solution implements iSolution {
   * @returns {Solution}
   * @internal
   */
-  static fromPlain = (plain: unknown): Solution => plainToClass(Solution, plain)
+  static fromPlain = (plain: iSolution): Solution => plainToClass(Solution, plain)
 
   /**
   * Validate Solution

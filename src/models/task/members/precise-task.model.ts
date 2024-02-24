@@ -3,7 +3,6 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
-import { AllowPrimitives } from '@/types'
 import { aTask } from '../task.abstract'
 import { iMatrix, iPoint, iPriority, iSettings, Matrix, Point, Priority, Settings } from './children'
 import { eTaskType } from './consts'
@@ -99,11 +98,11 @@ export class PreciseTask extends aTask implements iPreciseTask {
 
   /**
   * Create PreciseTask from plain object
-  * @param {unknown} plain - plain object
+  * @param {iPreciseTask} plain - plain object
   * @returns {PreciseTask}
   * @internal
   */
-  static fromPlain = (plain: AllowPrimitives<iPreciseTask>): PreciseTask => plainToClass(PreciseTask, plain)
+  static fromPlain = (plain: iPreciseTask): PreciseTask => plainToClass(PreciseTask, plain)
 
   /**
   * Validate PreciseTask

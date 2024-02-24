@@ -3,7 +3,6 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
-import { AllowPrimitives } from '@/types'
 import { aTask } from '../task.abstract'
 import { iMatrix, Matrix, iPriority, Priority, iSettings, Settings } from './children'
 import { eTaskType } from './consts'
@@ -99,11 +98,11 @@ export class OptimizationTask extends aTask implements iOptimizationTask {
 
   /**
   * Create OptimizationTask from plain object
-  * @param {unknown} plain - plain object
+  * @param {iOptimizationTask} plain - plain object
   * @returns {OptimizationTask}
   * @internal
   */
-  static fromPlain = (plain: AllowPrimitives<iOptimizationTask>): OptimizationTask =>
+  static fromPlain = (plain: iOptimizationTask): OptimizationTask =>
     plainToClass(OptimizationTask, plain)
 
   /**

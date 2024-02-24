@@ -3,7 +3,6 @@ import { Expose, plainToClass, Type } from 'class-transformer'
 
 import { Default } from '@/decorators'
 import { ModelError } from '@/errors'
-import { AllowPrimitives } from '@/types'
 import { aTask } from '../task.abstract'
 import { iMatrix, iPriority, iSettings, Matrix, Priority, Settings } from './children'
 import { eTaskType } from './consts'
@@ -83,11 +82,11 @@ export class Task extends aTask implements iTask {
 
   /**
   * Create Task from plain object
-  * @param {unknown} plain - plain object
+  * @param {iTask} plain - plain object
   * @returns {Task}
   * @internal
   */
-  static fromPlain = (plain: AllowPrimitives<iTask>): Task => plainToClass(Task, plain)
+  static fromPlain = (plain: iTask): Task => plainToClass(Task, plain)
 
   /**
   * Validate Task

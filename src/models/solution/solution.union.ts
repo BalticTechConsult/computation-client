@@ -1,4 +1,3 @@
-import { AllowPrimitives } from '@/types'
 import { eSolutionType, iSolution, Solution } from './members'
 
 
@@ -23,10 +22,10 @@ export type iuSolution =
 export namespace uSolution {
   /**
   * Create uSolution from plain object
-  * @param {AllowPrimitives<iuSolution>} plain - plain object
-  * @returns {uTask}
+  * @param {iuSolution} plain - plain object
+  * @returns {uTask|never}
   */
-  export function fromPlain(plain: AllowPrimitives<iuSolution>): uSolution {
+  export function fromPlain(plain: iuSolution): uSolution {
     switch (plain?.solutionType) {
       case eSolutionType.SOLUTION:
         return Solution.fromPlain(plain)
