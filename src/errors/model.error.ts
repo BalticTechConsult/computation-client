@@ -7,7 +7,7 @@ export class ModelError extends TypeError {
   constructor(message: string, errors: ValidationError[]) {
     super(message)
 
-    this.name = 'DocReaderTypeError'
+    this.name = 'ModelTypeError'
     this.message = message
     this.errors = errors
   }
