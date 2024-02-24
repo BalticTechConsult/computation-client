@@ -2,7 +2,7 @@
   "name": "@baltictechconsult/computation-client",
   "title": "Computation Client",
   "description": "Computation Client implementation",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "BalticTechConsult",
   "license": "(MIT OR Apache-2.0)",
   "scripts": {

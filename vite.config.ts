@@ -8,6 +8,14 @@ export default defineConfig({
     dts({ entryRoot: './src', outDir: './dist/types', insertTypesEntry: true, })
   ],
   build: {
+    rollupOptions: {
+      external: ['ws'],
+      output: {
+        globals: {
+          ws: 'WebSocket'
+        }
+      }
+    },
     lib: {
       entry: path.resolve(__dirname, './src/index.ts'),
       formats: ['es', 'cjs'],
