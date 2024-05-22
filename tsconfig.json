@@ -31,7 +31,10 @@
       "./node_modules/@types"
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@client": ["src/client"],
+      "@commands": ["src/commands"],
+      "@test/*": ["src/test/*"],
+      "@config": ["src/config"],
     },
   },
   "exclude": ["tests", "tools"],

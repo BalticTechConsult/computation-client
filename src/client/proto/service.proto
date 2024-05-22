@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package service;
+
+import public "google/protobuf/empty.proto";
+
+service Broker {
+  rpc Ping (google.protobuf.Empty) returns (PingResponse);
+}
+
+message PingResponse {
+  string message = 1;
+}
