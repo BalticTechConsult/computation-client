@@ -2,7 +2,6 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import dts from 'vite-plugin-dts'
-import copy from 'rollup-plugin-copy'
 
 const clientConfig = defineConfig({
   plugins: [
@@ -21,19 +20,39 @@ const clientConfig = defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['path', 'fs', 'os'],
+      onwarn: (warning, warn) => {
+        if (warning.code === 'EVAL') return;
+        warn(warning);
+      },
       output: {
         globals: {
           path: 'path',
           fs: 'fs',
           os: 'os',
         },
-      }
+      },
+      external: [
+        'tls',
+        'net',
+        'fs',
+        'http2',
+        'zlib',
+        'http',
+        'https',
+        'stream',
+        'crypto',
+        'os',
+        'path',
+        'dns',
+        'util',
+        'events',
+        'process',
+        'url'
+      ],
     }
   }
 })
 
-// Конфигурация для CLI
 const cliConfig = defineConfig({
   plugins: [
     tsconfigPaths(),
@@ -41,15 +60,37 @@ const cliConfig = defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: false,
+    polyfillModulePreload: false,
     lib: {
       entry: resolve(__dirname, 'src/cli.ts'),
       formats: ['cjs'],
     },
     rollupOptions: {
+      onwarn: (warning, warn) => {
+        if (warning.code === 'EVAL') return;
+        warn(warning);
+      },
       output: {
         entryFileNames: '[name].cjs',
       },
-      plugins: []
+      external: [
+        'tls',
+        'net',
+        'fs',
+        'http2',
+        'zlib',
+        'http',
+        'https',
+        'stream',
+        'crypto',
+        'os',
+        'path',
+        'dns',
+        'util',
+        'events',
+        'process',
+        'url'
+      ],
     }
   }
 })
