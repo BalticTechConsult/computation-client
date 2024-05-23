@@ -24,13 +24,6 @@ const clientConfig = defineConfig({
         if (warning.code === 'EVAL') return;
         warn(warning);
       },
-      output: {
-        globals: {
-          path: 'path',
-          fs: 'fs',
-          os: 'os',
-        },
-      },
       external: [
         'tls',
         'net',
@@ -60,7 +53,6 @@ const cliConfig = defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: false,
-    polyfillModulePreload: false,
     lib: {
       entry: resolve(__dirname, 'src/cli.ts'),
       formats: ['cjs'],
@@ -74,22 +66,25 @@ const cliConfig = defineConfig({
         entryFileNames: '[name].cjs',
       },
       external: [
+        'node:process',
+        'node:fs',
+        'node:events',
+        'node:child_process',
+        'node:path',
         'tls',
-        'net',
-        'fs',
-        'http2',
-        'zlib',
-        'http',
-        'https',
-        'stream',
-        'crypto',
-        'os',
-        'path',
-        'dns',
-        'util',
-        'events',
         'process',
-        'url'
+        'http2',
+        'util',
+        'net',
+        'dns',
+        'zlib',
+        'events',
+        'stream',
+        'fs',
+        'os',
+        'http',
+        'url',
+        'path'
       ],
     }
   }

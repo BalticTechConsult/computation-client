@@ -1,30 +1,25 @@
-import { grpc } from '@improbable-eng/grpc-web'
-import { Empty } from 'google-protobuf/google/protobuf/empty_pb'
+import { ChannelCredentials } from '@grpc/grpc-js'
 
-import { BrokerClient  } from './proto'
+import { Empty } from './proto/google/protobuf/empty'
+import { BrokerClient } from './proto/service'
+
 
 export class Client {
   private client: BrokerClient
 
-  constructor(host: string, port: number) {
-    this.client = new BrokerClient(`${host}:${port}`)
+  constructor(address: string) {
+    this.client = new BrokerClient(address, ChannelCredentials.createInsecure())
   }
 
   public async ping(): Promise<string> {
-    const request = new Empty()
-    const metadata = new grpc.Metadata()
+    const request = Empty.create()
 
     return new Promise((resolve, reject) => {
-      this.client.ping(request, metadata, (error, responseMessage) => {
+      this.client.ping(request, (error, response) => {
         if (error) {
           return reject(error)
         }
-
-        if (responseMessage === null) {
-          return reject(new Error('Response is null'))
-        }
-
-        resolve(responseMessage.getMessage())
+        resolve(response.message)
       })
     })
   }

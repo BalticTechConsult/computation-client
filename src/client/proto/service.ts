@@ -20,7 +20,7 @@ import {
 import _m0 from "protobufjs/minimal";
 import { Empty } from "./google/protobuf/empty";
 
-export const protobufPackage = "service";
+export const protobufPackage = "broker";
 
 export interface PingResponse {
   message: string;
@@ -86,7 +86,7 @@ export const PingResponse = {
 export type BrokerService = typeof BrokerService;
 export const BrokerService = {
   ping: {
-    path: "/service.Broker/Ping",
+    path: "/broker.Broker/Ping",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
@@ -115,7 +115,7 @@ export interface BrokerClient extends Client {
   ): ClientUnaryCall;
 }
 
-export const BrokerClient = makeGenericClientConstructor(BrokerService, "service.Broker") as unknown as {
+export const BrokerClient = makeGenericClientConstructor(BrokerService, "broker.Broker") as unknown as {
   new (address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): BrokerClient;
   service: typeof BrokerService;
   serviceName: string;
