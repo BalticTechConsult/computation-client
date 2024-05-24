@@ -2,12 +2,77 @@ syntax = "proto3";
 
 package broker;
 
-import public "google/protobuf/empty.proto";
+option go_package = "broker/proto;brokerpb";
+
+import "google/protobuf/empty.proto";
 
 service Broker {
-  rpc Ping (google.protobuf.Empty) returns (PingResponse);
+  rpc Ping(google.protobuf.Empty) returns (PingResponse);
+  rpc Solve(TaskOrOptimizationTask) returns (TaskIdResponse);
+  rpc Delete(TaskIdRequest) returns (DeleteResponse);
 }
 
 message PingResponse {
   string message = 1;
+}
+
+message TaskIdRequest {
+  string id = 1;
+}
+
+message DeleteResponse {
+  string message = 1;
+}
+
+message Task {
+  Settings settings = 1;
+  repeated MatrixRecord matrix = 2;
+  repeated Point points = 3;
+  string start_point_id = 4;
+}
+
+message OptimizationTask {
+  Settings settings = 1;
+  repeated MatrixRecord matrix = 2;
+  repeated Point points = 3;
+  string start_point_id = 4;
+  repeated Route routes = 5;
+}
+
+message Route {
+  repeated string points = 1;
+}
+
+message TaskOrOptimizationTask {
+  oneof task_type {
+    Task task = 1;
+    OptimizationTask optimization_task = 2;
+  }
+}
+
+message TaskIdResponse {
+  string id = 1;
+}
+
+message Settings {
+  int32 routes = 1;
+  int32 looped_routes = 2;
+  int32 min_pir = 3;
+  int32 max_pir = 4;
+  int32 fmri = 5;
+  int32 lmri = 6;
+}
+
+message MatrixRecord {
+  string id_from = 1;
+  string id_to = 2;
+  double distance = 3;
+  double time = 4;
+}
+
+message Point {
+  string id = 1;
+  int32 priority = 2;
+  float lat = 3;
+  float lon = 4;
 }

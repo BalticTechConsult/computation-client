@@ -32,6 +32,7 @@
     ],
     "paths": {
       "@client": ["src/client"],
+      "@client/*": ["src/client/*"],
       "@commands": ["src/commands"],
     },
   },

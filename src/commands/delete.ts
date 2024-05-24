@@ -7,15 +7,14 @@ const isServiceError = (error: unknown): error is ServiceError => {
   return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
 }
 
-export async function pingCommand(brokerAddress: string) {
+export async function deleteCommand(brokerAddress: string, taskId: string) {
   const client = new Client(brokerAddress)
 
   try {
-    const message = await client.ping()
-    console.log('Ping response:', message)
-    console.log('Broker is alive and well.')
+    const responseMessage = await client.delete(taskId)
+    console.log('Broker response:', responseMessage)
   } catch (error) {
-    console.error('Broker is unavailable:')
+    console.error('Error deleting task:')
 
     if (isServiceError(error)) {
       console.error(`  Error Code: ${error.code}`)

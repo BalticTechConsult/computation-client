@@ -2,7 +2,7 @@
   "name": "@baltictechconsult/computation-client",
   "title": "Computation Client",
   "description": "Computation Client implementation",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "BalticTechConsult",
   "license": "(MIT OR Apache-2.0)",
   "scripts": {
@@ -11,7 +11,7 @@
     "build:cli": "vite build --config vite.config.js --mode cli",
     "build": "npm run clean && npm run build:client && npm run build:cli",
     "proto": "cd src/client/proto && protoc --ts_proto_out=. --ts_proto_opt=esModuleInterop=true,outputServices=grpc-js ./service.proto",
-    "ping": "chmod +x ./dist/cli.cjs && ./dist/cli.cjs ping localhost:51222",
+    "permissions": "chmod +x ./dist/cli.cjs",
     "test": "jest"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
   "types": "dist/types/index.d.ts",
   "type": "module",
   "bin": {
-    "computation-client": "./dist/cli.js"
+    "computation-client": "./dist/cli.cjs"
   },
   "exports": {
     "import": "./dist/computation-client.js",

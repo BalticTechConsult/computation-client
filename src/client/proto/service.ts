@@ -26,6 +26,65 @@ export interface PingResponse {
   message: string;
 }
 
+export interface TaskIdRequest {
+  id: string;
+}
+
+export interface DeleteResponse {
+  message: string;
+}
+
+export interface Task {
+  settings: Settings | undefined;
+  matrix: MatrixRecord[];
+  points: Point[];
+  startPointId: string;
+}
+
+export interface OptimizationTask {
+  settings: Settings | undefined;
+  matrix: MatrixRecord[];
+  points: Point[];
+  startPointId: string;
+  routes: Route[];
+}
+
+export interface Route {
+  points: string[];
+}
+
+export interface TaskOrOptimizationTask {
+  task?: Task | undefined;
+  optimizationTask?: OptimizationTask | undefined;
+}
+
+export interface TaskIdResponse {
+  id: string;
+}
+
+export interface Settings {
+  routes: number;
+  loopedRoutes: number;
+  minPir: number;
+  maxPir: number;
+  fmri: number;
+  lmri: number;
+}
+
+export interface MatrixRecord {
+  idFrom: string;
+  idTo: string;
+  distance: number;
+  time: number;
+}
+
+export interface Point {
+  id: string;
+  priority: number;
+  lat: number;
+  lon: number;
+}
+
 function createBasePingResponse(): PingResponse {
   return { message: "" };
 }
@@ -83,6 +142,881 @@ export const PingResponse = {
   },
 };
 
+function createBaseTaskIdRequest(): TaskIdRequest {
+  return { id: "" };
+}
+
+export const TaskIdRequest = {
+  encode(message: TaskIdRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TaskIdRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTaskIdRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TaskIdRequest {
+    return { id: isSet(object.id) ? globalThis.String(object.id) : "" };
+  },
+
+  toJSON(message: TaskIdRequest): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TaskIdRequest>, I>>(base?: I): TaskIdRequest {
+    return TaskIdRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TaskIdRequest>, I>>(object: I): TaskIdRequest {
+    const message = createBaseTaskIdRequest();
+    message.id = object.id ?? "";
+    return message;
+  },
+};
+
+function createBaseDeleteResponse(): DeleteResponse {
+  return { message: "" };
+}
+
+export const DeleteResponse = {
+  encode(message: DeleteResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.message !== "") {
+      writer.uint32(10).string(message.message);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.message = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteResponse {
+    return { message: isSet(object.message) ? globalThis.String(object.message) : "" };
+  },
+
+  toJSON(message: DeleteResponse): unknown {
+    const obj: any = {};
+    if (message.message !== "") {
+      obj.message = message.message;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteResponse>, I>>(base?: I): DeleteResponse {
+    return DeleteResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<DeleteResponse>, I>>(object: I): DeleteResponse {
+    const message = createBaseDeleteResponse();
+    message.message = object.message ?? "";
+    return message;
+  },
+};
+
+function createBaseTask(): Task {
+  return { settings: undefined, matrix: [], points: [], startPointId: "" };
+}
+
+export const Task = {
+  encode(message: Task, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.settings !== undefined) {
+      Settings.encode(message.settings, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.matrix) {
+      MatrixRecord.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    for (const v of message.points) {
+      Point.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.startPointId !== "") {
+      writer.uint32(34).string(message.startPointId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Task {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTask();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.settings = Settings.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.matrix.push(MatrixRecord.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.points.push(Point.decode(reader, reader.uint32()));
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.startPointId = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Task {
+    return {
+      settings: isSet(object.settings) ? Settings.fromJSON(object.settings) : undefined,
+      matrix: globalThis.Array.isArray(object?.matrix) ? object.matrix.map((e: any) => MatrixRecord.fromJSON(e)) : [],
+      points: globalThis.Array.isArray(object?.points) ? object.points.map((e: any) => Point.fromJSON(e)) : [],
+      startPointId: isSet(object.startPointId) ? globalThis.String(object.startPointId) : "",
+    };
+  },
+
+  toJSON(message: Task): unknown {
+    const obj: any = {};
+    if (message.settings !== undefined) {
+      obj.settings = Settings.toJSON(message.settings);
+    }
+    if (message.matrix?.length) {
+      obj.matrix = message.matrix.map((e) => MatrixRecord.toJSON(e));
+    }
+    if (message.points?.length) {
+      obj.points = message.points.map((e) => Point.toJSON(e));
+    }
+    if (message.startPointId !== "") {
+      obj.startPointId = message.startPointId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Task>, I>>(base?: I): Task {
+    return Task.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Task>, I>>(object: I): Task {
+    const message = createBaseTask();
+    message.settings = (object.settings !== undefined && object.settings !== null)
+      ? Settings.fromPartial(object.settings)
+      : undefined;
+    message.matrix = object.matrix?.map((e) => MatrixRecord.fromPartial(e)) || [];
+    message.points = object.points?.map((e) => Point.fromPartial(e)) || [];
+    message.startPointId = object.startPointId ?? "";
+    return message;
+  },
+};
+
+function createBaseOptimizationTask(): OptimizationTask {
+  return { settings: undefined, matrix: [], points: [], startPointId: "", routes: [] };
+}
+
+export const OptimizationTask = {
+  encode(message: OptimizationTask, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.settings !== undefined) {
+      Settings.encode(message.settings, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.matrix) {
+      MatrixRecord.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    for (const v of message.points) {
+      Point.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.startPointId !== "") {
+      writer.uint32(34).string(message.startPointId);
+    }
+    for (const v of message.routes) {
+      Route.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): OptimizationTask {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseOptimizationTask();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.settings = Settings.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.matrix.push(MatrixRecord.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.points.push(Point.decode(reader, reader.uint32()));
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.startPointId = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.routes.push(Route.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OptimizationTask {
+    return {
+      settings: isSet(object.settings) ? Settings.fromJSON(object.settings) : undefined,
+      matrix: globalThis.Array.isArray(object?.matrix) ? object.matrix.map((e: any) => MatrixRecord.fromJSON(e)) : [],
+      points: globalThis.Array.isArray(object?.points) ? object.points.map((e: any) => Point.fromJSON(e)) : [],
+      startPointId: isSet(object.startPointId) ? globalThis.String(object.startPointId) : "",
+      routes: globalThis.Array.isArray(object?.routes) ? object.routes.map((e: any) => Route.fromJSON(e)) : [],
+    };
+  },
+
+  toJSON(message: OptimizationTask): unknown {
+    const obj: any = {};
+    if (message.settings !== undefined) {
+      obj.settings = Settings.toJSON(message.settings);
+    }
+    if (message.matrix?.length) {
+      obj.matrix = message.matrix.map((e) => MatrixRecord.toJSON(e));
+    }
+    if (message.points?.length) {
+      obj.points = message.points.map((e) => Point.toJSON(e));
+    }
+    if (message.startPointId !== "") {
+      obj.startPointId = message.startPointId;
+    }
+    if (message.routes?.length) {
+      obj.routes = message.routes.map((e) => Route.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<OptimizationTask>, I>>(base?: I): OptimizationTask {
+    return OptimizationTask.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<OptimizationTask>, I>>(object: I): OptimizationTask {
+    const message = createBaseOptimizationTask();
+    message.settings = (object.settings !== undefined && object.settings !== null)
+      ? Settings.fromPartial(object.settings)
+      : undefined;
+    message.matrix = object.matrix?.map((e) => MatrixRecord.fromPartial(e)) || [];
+    message.points = object.points?.map((e) => Point.fromPartial(e)) || [];
+    message.startPointId = object.startPointId ?? "";
+    message.routes = object.routes?.map((e) => Route.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseRoute(): Route {
+  return { points: [] };
+}
+
+export const Route = {
+  encode(message: Route, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.points) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Route {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRoute();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.points.push(reader.string());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Route {
+    return {
+      points: globalThis.Array.isArray(object?.points) ? object.points.map((e: any) => globalThis.String(e)) : [],
+    };
+  },
+
+  toJSON(message: Route): unknown {
+    const obj: any = {};
+    if (message.points?.length) {
+      obj.points = message.points;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Route>, I>>(base?: I): Route {
+    return Route.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Route>, I>>(object: I): Route {
+    const message = createBaseRoute();
+    message.points = object.points?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseTaskOrOptimizationTask(): TaskOrOptimizationTask {
+  return { task: undefined, optimizationTask: undefined };
+}
+
+export const TaskOrOptimizationTask = {
+  encode(message: TaskOrOptimizationTask, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.task !== undefined) {
+      Task.encode(message.task, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.optimizationTask !== undefined) {
+      OptimizationTask.encode(message.optimizationTask, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TaskOrOptimizationTask {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTaskOrOptimizationTask();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.task = Task.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.optimizationTask = OptimizationTask.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TaskOrOptimizationTask {
+    return {
+      task: isSet(object.task) ? Task.fromJSON(object.task) : undefined,
+      optimizationTask: isSet(object.optimizationTask) ? OptimizationTask.fromJSON(object.optimizationTask) : undefined,
+    };
+  },
+
+  toJSON(message: TaskOrOptimizationTask): unknown {
+    const obj: any = {};
+    if (message.task !== undefined) {
+      obj.task = Task.toJSON(message.task);
+    }
+    if (message.optimizationTask !== undefined) {
+      obj.optimizationTask = OptimizationTask.toJSON(message.optimizationTask);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TaskOrOptimizationTask>, I>>(base?: I): TaskOrOptimizationTask {
+    return TaskOrOptimizationTask.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TaskOrOptimizationTask>, I>>(object: I): TaskOrOptimizationTask {
+    const message = createBaseTaskOrOptimizationTask();
+    message.task = (object.task !== undefined && object.task !== null) ? Task.fromPartial(object.task) : undefined;
+    message.optimizationTask = (object.optimizationTask !== undefined && object.optimizationTask !== null)
+      ? OptimizationTask.fromPartial(object.optimizationTask)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseTaskIdResponse(): TaskIdResponse {
+  return { id: "" };
+}
+
+export const TaskIdResponse = {
+  encode(message: TaskIdResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TaskIdResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTaskIdResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TaskIdResponse {
+    return { id: isSet(object.id) ? globalThis.String(object.id) : "" };
+  },
+
+  toJSON(message: TaskIdResponse): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TaskIdResponse>, I>>(base?: I): TaskIdResponse {
+    return TaskIdResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TaskIdResponse>, I>>(object: I): TaskIdResponse {
+    const message = createBaseTaskIdResponse();
+    message.id = object.id ?? "";
+    return message;
+  },
+};
+
+function createBaseSettings(): Settings {
+  return { routes: 0, loopedRoutes: 0, minPir: 0, maxPir: 0, fmri: 0, lmri: 0 };
+}
+
+export const Settings = {
+  encode(message: Settings, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.routes !== 0) {
+      writer.uint32(8).int32(message.routes);
+    }
+    if (message.loopedRoutes !== 0) {
+      writer.uint32(16).int32(message.loopedRoutes);
+    }
+    if (message.minPir !== 0) {
+      writer.uint32(24).int32(message.minPir);
+    }
+    if (message.maxPir !== 0) {
+      writer.uint32(32).int32(message.maxPir);
+    }
+    if (message.fmri !== 0) {
+      writer.uint32(40).int32(message.fmri);
+    }
+    if (message.lmri !== 0) {
+      writer.uint32(48).int32(message.lmri);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Settings {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSettings();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.routes = reader.int32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.loopedRoutes = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.minPir = reader.int32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.maxPir = reader.int32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.fmri = reader.int32();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.lmri = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Settings {
+    return {
+      routes: isSet(object.routes) ? globalThis.Number(object.routes) : 0,
+      loopedRoutes: isSet(object.loopedRoutes) ? globalThis.Number(object.loopedRoutes) : 0,
+      minPir: isSet(object.minPir) ? globalThis.Number(object.minPir) : 0,
+      maxPir: isSet(object.maxPir) ? globalThis.Number(object.maxPir) : 0,
+      fmri: isSet(object.fmri) ? globalThis.Number(object.fmri) : 0,
+      lmri: isSet(object.lmri) ? globalThis.Number(object.lmri) : 0,
+    };
+  },
+
+  toJSON(message: Settings): unknown {
+    const obj: any = {};
+    if (message.routes !== 0) {
+      obj.routes = Math.round(message.routes);
+    }
+    if (message.loopedRoutes !== 0) {
+      obj.loopedRoutes = Math.round(message.loopedRoutes);
+    }
+    if (message.minPir !== 0) {
+      obj.minPir = Math.round(message.minPir);
+    }
+    if (message.maxPir !== 0) {
+      obj.maxPir = Math.round(message.maxPir);
+    }
+    if (message.fmri !== 0) {
+      obj.fmri = Math.round(message.fmri);
+    }
+    if (message.lmri !== 0) {
+      obj.lmri = Math.round(message.lmri);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Settings>, I>>(base?: I): Settings {
+    return Settings.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Settings>, I>>(object: I): Settings {
+    const message = createBaseSettings();
+    message.routes = object.routes ?? 0;
+    message.loopedRoutes = object.loopedRoutes ?? 0;
+    message.minPir = object.minPir ?? 0;
+    message.maxPir = object.maxPir ?? 0;
+    message.fmri = object.fmri ?? 0;
+    message.lmri = object.lmri ?? 0;
+    return message;
+  },
+};
+
+function createBaseMatrixRecord(): MatrixRecord {
+  return { idFrom: "", idTo: "", distance: 0, time: 0 };
+}
+
+export const MatrixRecord = {
+  encode(message: MatrixRecord, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.idFrom !== "") {
+      writer.uint32(10).string(message.idFrom);
+    }
+    if (message.idTo !== "") {
+      writer.uint32(18).string(message.idTo);
+    }
+    if (message.distance !== 0) {
+      writer.uint32(25).double(message.distance);
+    }
+    if (message.time !== 0) {
+      writer.uint32(33).double(message.time);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MatrixRecord {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMatrixRecord();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.idFrom = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.idTo = reader.string();
+          continue;
+        case 3:
+          if (tag !== 25) {
+            break;
+          }
+
+          message.distance = reader.double();
+          continue;
+        case 4:
+          if (tag !== 33) {
+            break;
+          }
+
+          message.time = reader.double();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MatrixRecord {
+    return {
+      idFrom: isSet(object.idFrom) ? globalThis.String(object.idFrom) : "",
+      idTo: isSet(object.idTo) ? globalThis.String(object.idTo) : "",
+      distance: isSet(object.distance) ? globalThis.Number(object.distance) : 0,
+      time: isSet(object.time) ? globalThis.Number(object.time) : 0,
+    };
+  },
+
+  toJSON(message: MatrixRecord): unknown {
+    const obj: any = {};
+    if (message.idFrom !== "") {
+      obj.idFrom = message.idFrom;
+    }
+    if (message.idTo !== "") {
+      obj.idTo = message.idTo;
+    }
+    if (message.distance !== 0) {
+      obj.distance = message.distance;
+    }
+    if (message.time !== 0) {
+      obj.time = message.time;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MatrixRecord>, I>>(base?: I): MatrixRecord {
+    return MatrixRecord.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MatrixRecord>, I>>(object: I): MatrixRecord {
+    const message = createBaseMatrixRecord();
+    message.idFrom = object.idFrom ?? "";
+    message.idTo = object.idTo ?? "";
+    message.distance = object.distance ?? 0;
+    message.time = object.time ?? 0;
+    return message;
+  },
+};
+
+function createBasePoint(): Point {
+  return { id: "", priority: 0, lat: 0, lon: 0 };
+}
+
+export const Point = {
+  encode(message: Point, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.priority !== 0) {
+      writer.uint32(16).int32(message.priority);
+    }
+    if (message.lat !== 0) {
+      writer.uint32(29).float(message.lat);
+    }
+    if (message.lon !== 0) {
+      writer.uint32(37).float(message.lon);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Point {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePoint();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.priority = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 29) {
+            break;
+          }
+
+          message.lat = reader.float();
+          continue;
+        case 4:
+          if (tag !== 37) {
+            break;
+          }
+
+          message.lon = reader.float();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Point {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      priority: isSet(object.priority) ? globalThis.Number(object.priority) : 0,
+      lat: isSet(object.lat) ? globalThis.Number(object.lat) : 0,
+      lon: isSet(object.lon) ? globalThis.Number(object.lon) : 0,
+    };
+  },
+
+  toJSON(message: Point): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.priority !== 0) {
+      obj.priority = Math.round(message.priority);
+    }
+    if (message.lat !== 0) {
+      obj.lat = message.lat;
+    }
+    if (message.lon !== 0) {
+      obj.lon = message.lon;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Point>, I>>(base?: I): Point {
+    return Point.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Point>, I>>(object: I): Point {
+    const message = createBasePoint();
+    message.id = object.id ?? "";
+    message.priority = object.priority ?? 0;
+    message.lat = object.lat ?? 0;
+    message.lon = object.lon ?? 0;
+    return message;
+  },
+};
+
 export type BrokerService = typeof BrokerService;
 export const BrokerService = {
   ping: {
@@ -94,10 +1028,30 @@ export const BrokerService = {
     responseSerialize: (value: PingResponse) => Buffer.from(PingResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => PingResponse.decode(value),
   },
+  solve: {
+    path: "/broker.Broker/Solve",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: TaskOrOptimizationTask) => Buffer.from(TaskOrOptimizationTask.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => TaskOrOptimizationTask.decode(value),
+    responseSerialize: (value: TaskIdResponse) => Buffer.from(TaskIdResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => TaskIdResponse.decode(value),
+  },
+  delete: {
+    path: "/broker.Broker/Delete",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: TaskIdRequest) => Buffer.from(TaskIdRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => TaskIdRequest.decode(value),
+    responseSerialize: (value: DeleteResponse) => Buffer.from(DeleteResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DeleteResponse.decode(value),
+  },
 } as const;
 
 export interface BrokerServer extends UntypedServiceImplementation {
   ping: handleUnaryCall<Empty, PingResponse>;
+  solve: handleUnaryCall<TaskOrOptimizationTask, TaskIdResponse>;
+  delete: handleUnaryCall<TaskIdRequest, DeleteResponse>;
 }
 
 export interface BrokerClient extends Client {
@@ -112,6 +1066,36 @@ export interface BrokerClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: PingResponse) => void,
+  ): ClientUnaryCall;
+  solve(
+    request: TaskOrOptimizationTask,
+    callback: (error: ServiceError | null, response: TaskIdResponse) => void,
+  ): ClientUnaryCall;
+  solve(
+    request: TaskOrOptimizationTask,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: TaskIdResponse) => void,
+  ): ClientUnaryCall;
+  solve(
+    request: TaskOrOptimizationTask,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: TaskIdResponse) => void,
+  ): ClientUnaryCall;
+  delete(
+    request: TaskIdRequest,
+    callback: (error: ServiceError | null, response: DeleteResponse) => void,
+  ): ClientUnaryCall;
+  delete(
+    request: TaskIdRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DeleteResponse) => void,
+  ): ClientUnaryCall;
+  delete(
+    request: TaskIdRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DeleteResponse) => void,
   ): ClientUnaryCall;
 }
 

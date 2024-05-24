@@ -27,10 +27,10 @@ describe('pingCommand', () => {
 
     expect(logSpy).not.toHaveBeenCalled()
     expect(errorSpy).toHaveBeenCalledWith('Broker is unavailable:')
-    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('  Error Code:'))
-    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('  Error Message:'))
-    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining(`  Address: ${invalidAddress}`))
-    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('  Timestamp:'))
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error Code:'))
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error Message:'))
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining(`Address: ${invalidAddress}`))
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Timestamp:'))
 
     logSpy.mockRestore()
     errorSpy.mockRestore()
