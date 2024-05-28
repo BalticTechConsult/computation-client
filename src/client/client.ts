@@ -1,7 +1,7 @@
 import { ChannelCredentials } from '@grpc/grpc-js'
 
 import { Empty } from './proto/google/protobuf/empty'
-import { BrokerClient, PingResponse, TaskOrOptimizationTask, TaskIdResponse, TaskIdRequest, DeleteResponse } from './proto/service';
+import { BrokerClient, TaskIdRequest, TaskOrOptimizationTask, TasksResponse } from './proto/service';
 
 
 export class Client {
@@ -46,5 +46,31 @@ export class Client {
         resolve(response.message);
       });
     });
+  }
+
+  public async clear(): Promise<string> {
+    const request = Empty.create()
+
+    return new Promise((resolve, reject) => {
+      this.client.clear(request, (error, response) => {
+        if (error) {
+          return reject(error)
+        }
+        resolve(response.message)
+      })
+    })
+  }
+
+  public async getTasks(): Promise<TasksResponse> {
+    const request = Empty.create()
+
+    return new Promise((resolve, reject) => {
+      this.client.getTasks(request, (error, response) => {
+        if (error) {
+          return reject(error)
+        }
+        resolve(response)
+      })
+    })
   }
 }

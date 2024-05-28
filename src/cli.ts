@@ -2,7 +2,7 @@
 
 import { Command } from 'commander'
 
-import { pingCommand, deleteCommand, solveCommand } from '@commands'
+import { pingCommand, deleteCommand, solveCommand, clearCommand, getTasksCommand } from '@commands'
 
 
 const program = new Command()
@@ -59,6 +59,36 @@ program
     }
 
     void solveCommand(brokerAddress, filePath)
+  })
+
+program
+  .command('clear')
+  .description('Clear the task queue')
+  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .action((options) => {
+    const brokerAddress = options.address
+
+    if (!brokerAddress) {
+      console.error('Broker address is required')
+      process.exit(1)
+    }
+
+    void clearCommand(brokerAddress)
+  })
+
+program
+  .command('getTasks')
+  .description('Get the list of tasks')
+  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .action((options) => {
+    const brokerAddress = options.address
+
+    if (!brokerAddress) {
+      console.error('Broker address is required')
+      process.exit(1)
+    }
+
+    void getTasksCommand(brokerAddress)
   })
 
 program.parse(process.argv)

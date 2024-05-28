@@ -10,6 +10,22 @@ service Broker {
   rpc Ping(google.protobuf.Empty) returns (PingResponse);
   rpc Solve(TaskOrOptimizationTask) returns (TaskIdResponse);
   rpc Delete(TaskIdRequest) returns (DeleteResponse);
+  rpc Clear(google.protobuf.Empty) returns (ClearResponse);
+  rpc GetTasks(google.protobuf.Empty) returns (TasksResponse);
+}
+
+message TaskInfo {
+  string id = 1;
+  int32 solution_count = 2;
+  bool is_pending = 3;
+}
+
+message TasksResponse {
+  repeated TaskInfo tasks = 1;
+}
+
+message ClearResponse {
+  string message = 1;
 }
 
 message PingResponse {
