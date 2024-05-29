@@ -22,6 +22,14 @@ import { Empty } from "./google/protobuf/empty";
 
 export const protobufPackage = "broker";
 
+export interface SolutionsRequest {
+  id: string;
+}
+
+export interface SolutionsResponse {
+  solutions: Solution[];
+}
+
 export interface TaskInfo {
   id: string;
   solutionCount: number;
@@ -98,6 +106,133 @@ export interface Point {
   lat: number;
   lon: number;
 }
+
+export interface Solution {
+  id: string;
+  routes: Route[];
+  distance: number;
+  time: number;
+  executionTime: number;
+  resultCode: number;
+}
+
+function createBaseSolutionsRequest(): SolutionsRequest {
+  return { id: "" };
+}
+
+export const SolutionsRequest = {
+  encode(message: SolutionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SolutionsRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSolutionsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SolutionsRequest {
+    return { id: isSet(object.id) ? globalThis.String(object.id) : "" };
+  },
+
+  toJSON(message: SolutionsRequest): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SolutionsRequest>, I>>(base?: I): SolutionsRequest {
+    return SolutionsRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SolutionsRequest>, I>>(object: I): SolutionsRequest {
+    const message = createBaseSolutionsRequest();
+    message.id = object.id ?? "";
+    return message;
+  },
+};
+
+function createBaseSolutionsResponse(): SolutionsResponse {
+  return { solutions: [] };
+}
+
+export const SolutionsResponse = {
+  encode(message: SolutionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.solutions) {
+      Solution.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SolutionsResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSolutionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.solutions.push(Solution.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SolutionsResponse {
+    return {
+      solutions: globalThis.Array.isArray(object?.solutions)
+        ? object.solutions.map((e: any) => Solution.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: SolutionsResponse): unknown {
+    const obj: any = {};
+    if (message.solutions?.length) {
+      obj.solutions = message.solutions.map((e) => Solution.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SolutionsResponse>, I>>(base?: I): SolutionsResponse {
+    return SolutionsResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SolutionsResponse>, I>>(object: I): SolutionsResponse {
+    const message = createBaseSolutionsResponse();
+    message.solutions = object.solutions?.map((e) => Solution.fromPartial(e)) || [];
+    return message;
+  },
+};
 
 function createBaseTaskInfo(): TaskInfo {
   return { id: "", solutionCount: 0, isPending: false };
@@ -1234,6 +1369,140 @@ export const Point = {
   },
 };
 
+function createBaseSolution(): Solution {
+  return { id: "", routes: [], distance: 0, time: 0, executionTime: 0, resultCode: 0 };
+}
+
+export const Solution = {
+  encode(message: Solution, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    for (const v of message.routes) {
+      Route.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.distance !== 0) {
+      writer.uint32(25).double(message.distance);
+    }
+    if (message.time !== 0) {
+      writer.uint32(33).double(message.time);
+    }
+    if (message.executionTime !== 0) {
+      writer.uint32(41).double(message.executionTime);
+    }
+    if (message.resultCode !== 0) {
+      writer.uint32(48).int32(message.resultCode);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Solution {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSolution();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.routes.push(Route.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 25) {
+            break;
+          }
+
+          message.distance = reader.double();
+          continue;
+        case 4:
+          if (tag !== 33) {
+            break;
+          }
+
+          message.time = reader.double();
+          continue;
+        case 5:
+          if (tag !== 41) {
+            break;
+          }
+
+          message.executionTime = reader.double();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.resultCode = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Solution {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      routes: globalThis.Array.isArray(object?.routes) ? object.routes.map((e: any) => Route.fromJSON(e)) : [],
+      distance: isSet(object.distance) ? globalThis.Number(object.distance) : 0,
+      time: isSet(object.time) ? globalThis.Number(object.time) : 0,
+      executionTime: isSet(object.executionTime) ? globalThis.Number(object.executionTime) : 0,
+      resultCode: isSet(object.resultCode) ? globalThis.Number(object.resultCode) : 0,
+    };
+  },
+
+  toJSON(message: Solution): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.routes?.length) {
+      obj.routes = message.routes.map((e) => Route.toJSON(e));
+    }
+    if (message.distance !== 0) {
+      obj.distance = message.distance;
+    }
+    if (message.time !== 0) {
+      obj.time = message.time;
+    }
+    if (message.executionTime !== 0) {
+      obj.executionTime = message.executionTime;
+    }
+    if (message.resultCode !== 0) {
+      obj.resultCode = Math.round(message.resultCode);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Solution>, I>>(base?: I): Solution {
+    return Solution.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Solution>, I>>(object: I): Solution {
+    const message = createBaseSolution();
+    message.id = object.id ?? "";
+    message.routes = object.routes?.map((e) => Route.fromPartial(e)) || [];
+    message.distance = object.distance ?? 0;
+    message.time = object.time ?? 0;
+    message.executionTime = object.executionTime ?? 0;
+    message.resultCode = object.resultCode ?? 0;
+    return message;
+  },
+};
+
 export type BrokerService = typeof BrokerService;
 export const BrokerService = {
   ping: {
@@ -1281,6 +1550,15 @@ export const BrokerService = {
     responseSerialize: (value: TasksResponse) => Buffer.from(TasksResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => TasksResponse.decode(value),
   },
+  getSolutions: {
+    path: "/broker.Broker/GetSolutions",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: SolutionsRequest) => Buffer.from(SolutionsRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => SolutionsRequest.decode(value),
+    responseSerialize: (value: SolutionsResponse) => Buffer.from(SolutionsResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => SolutionsResponse.decode(value),
+  },
 } as const;
 
 export interface BrokerServer extends UntypedServiceImplementation {
@@ -1289,6 +1567,7 @@ export interface BrokerServer extends UntypedServiceImplementation {
   delete: handleUnaryCall<TaskIdRequest, DeleteResponse>;
   clear: handleUnaryCall<Empty, ClearResponse>;
   getTasks: handleUnaryCall<Empty, TasksResponse>;
+  getSolutions: handleUnaryCall<SolutionsRequest, SolutionsResponse>;
 }
 
 export interface BrokerClient extends Client {
@@ -1357,6 +1636,21 @@ export interface BrokerClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: TasksResponse) => void,
+  ): ClientUnaryCall;
+  getSolutions(
+    request: SolutionsRequest,
+    callback: (error: ServiceError | null, response: SolutionsResponse) => void,
+  ): ClientUnaryCall;
+  getSolutions(
+    request: SolutionsRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: SolutionsResponse) => void,
+  ): ClientUnaryCall;
+  getSolutions(
+    request: SolutionsRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: SolutionsResponse) => void,
   ): ClientUnaryCall;
 }
 

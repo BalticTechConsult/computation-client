@@ -3,6 +3,7 @@
 import { Command } from 'commander'
 
 import { pingCommand, deleteCommand, solveCommand, clearCommand, getTasksCommand } from '@commands'
+import { getSolutionsCommand } from './commands/get-solutions'
 
 
 const program = new Command()
@@ -89,6 +90,23 @@ program
     }
 
     void getTasksCommand(brokerAddress)
+  })
+
+program
+  .command('getSolutions')
+  .description('Get the solutions for a task')
+  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .option('-i, --id <taskId>', 'The ID of the task to get solutions for')
+  .action((options) => {
+    const brokerAddress = options.address
+    const taskId = options.id
+
+    if (!brokerAddress || !taskId) {
+      console.error('Broker address and task ID are required')
+      process.exit(1)
+    }
+
+    void getSolutionsCommand(brokerAddress, taskId)
   })
 
 program.parse(process.argv)

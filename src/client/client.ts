@@ -1,7 +1,14 @@
 import { ChannelCredentials } from '@grpc/grpc-js'
 
 import { Empty } from './proto/google/protobuf/empty'
-import { BrokerClient, TaskIdRequest, TaskOrOptimizationTask, TasksResponse } from './proto/service';
+import {
+  BrokerClient,
+  SolutionsRequest,
+  SolutionsResponse,
+  TaskIdRequest,
+  TaskOrOptimizationTask,
+  TasksResponse
+} from './proto/service';
 
 
 export class Client {
@@ -66,6 +73,19 @@ export class Client {
 
     return new Promise((resolve, reject) => {
       this.client.getTasks(request, (error, response) => {
+        if (error) {
+          return reject(error)
+        }
+        resolve(response)
+      })
+    })
+  }
+
+  public async getSolutions(taskId: string): Promise<SolutionsResponse> {
+    const request = SolutionsRequest.create({ id: taskId })
+
+    return new Promise((resolve, reject) => {
+      this.client.getSolutions(request, (error, response) => {
         if (error) {
           return reject(error)
         }
