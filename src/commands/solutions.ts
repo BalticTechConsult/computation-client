@@ -6,13 +6,13 @@ const isServiceError = (error: unknown): error is ServiceError => {
   return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
 }
 
-export async function getTasksCommand(brokerAddress: string) {
+export async function solutionsCommand(brokerAddress: string, taskId: string) {
   const client = new Client(brokerAddress)
   try {
-    const response = await client.getTasks()
-    console.log('Tasks response:', JSON.stringify(response.tasks, null, 2))
+    const response = await client.solutions(taskId)
+    console.log('Solutions response:', JSON.stringify(response.solutions, null, 2))
   } catch (error) {
-    console.error('Error getting tasks:')
+    console.error('Error getting solutions:')
 
     if (isServiceError(error)) {
       console.error(`  Error Code: ${error.code}`)

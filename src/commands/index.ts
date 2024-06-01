@@ -1,5 +1,6 @@
 export * from './clear'
 export * from './delete'
-export * from './get-tasks'
 export * from './ping'
+export * from './solutions'
 export * from './solve'
+export * from './tasks'

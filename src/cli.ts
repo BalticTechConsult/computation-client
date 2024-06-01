@@ -2,8 +2,7 @@
 
 import { Command } from 'commander'
 
-import { pingCommand, deleteCommand, solveCommand, clearCommand, getTasksCommand } from '@commands'
-import { getSolutionsCommand } from './commands/get-solutions'
+import { pingCommand, deleteCommand, solveCommand, clearCommand, tasksCommand, solutionsCommand } from '@commands'
 
 
 const program = new Command()
@@ -15,8 +14,8 @@ program
 
 program
   .command('ping')
-  .description('Ping the broker')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .description('ping the broker')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
   .action((options) => {
     const brokerAddress = options.address
 
@@ -30,9 +29,9 @@ program
 
 program
   .command('delete')
-  .description('Delete a task')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
-  .option('-i, --id <taskId>', 'The ID of the task to delete')
+  .description('delete a task')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
+  .option('-i, --id <taskId>', 'ID of the task to delete')
   .action((options) => {
     const brokerAddress = options.address
     const taskId = options.id
@@ -47,9 +46,9 @@ program
 
 program
   .command('solve')
-  .description('Submit a task')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
-  .option('-f, --file <filePath>', 'The path to the JSON file containing the task')
+  .description('submit a task')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
+  .option('-f, --file <filePath>', 'path to the JSON file containing the task')
   .action((options) => {
     const brokerAddress = options.address
     const filePath = options.file
@@ -64,8 +63,8 @@ program
 
 program
   .command('clear')
-  .description('Clear the task queue')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .description('clear the task queue')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
   .action((options) => {
     const brokerAddress = options.address
 
@@ -78,9 +77,9 @@ program
   })
 
 program
-  .command('getTasks')
-  .description('Get the list of tasks')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .command('tasks')
+  .description('get the list of tasks')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
   .action((options) => {
     const brokerAddress = options.address
 
@@ -89,14 +88,14 @@ program
       process.exit(1)
     }
 
-    void getTasksCommand(brokerAddress)
+    void tasksCommand(brokerAddress)
   })
 
 program
-  .command('getSolutions')
-  .description('Get the solutions for a task')
-  .option('-a, --address <brokerAddress>', 'The address of the broker')
-  .option('-i, --id <taskId>', 'The ID of the task to get solutions for')
+  .command('solutions')
+  .description('get the solutions for a task')
+  .option('-a, --address <brokerAddress>', 'address of the broker')
+  .option('-i, --id <taskId>', 'ID of the task to get solutions for')
   .action((options) => {
     const brokerAddress = options.address
     const taskId = options.id
@@ -106,7 +105,7 @@ program
       process.exit(1)
     }
 
-    void getSolutionsCommand(brokerAddress, taskId)
+    void solutionsCommand(brokerAddress, taskId)
   })
 
 program.parse(process.argv)

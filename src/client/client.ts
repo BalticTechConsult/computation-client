@@ -68,7 +68,7 @@ export class Client {
     })
   }
 
-  public async getTasks(): Promise<TasksResponse> {
+  public async tasks(): Promise<TasksResponse> {
     const request = Empty.create()
 
     return new Promise((resolve, reject) => {
@@ -81,7 +81,7 @@ export class Client {
     })
   }
 
-  public async getSolutions(taskId: string): Promise<SolutionsResponse> {
+  public async solutions(taskId: string): Promise<SolutionsResponse> {
     const request = SolutionsRequest.create({ id: taskId })
 
     return new Promise((resolve, reject) => {
