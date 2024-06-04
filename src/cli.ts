@@ -2,7 +2,15 @@
 
 import { Command } from 'commander'
 
-import { pingCommand, deleteCommand, solveCommand, clearCommand, tasksCommand, solutionsCommand } from '@commands'
+import {
+  pingCommand,
+  deleteCommand,
+  solveCommand,
+  clearCommand,
+  tasksCommand,
+  solutionsCommand,
+  connectionsCommand
+} from '@commands'
 
 
 const program = new Command()
@@ -106,6 +114,21 @@ program
     }
 
     void solutionsCommand(brokerAddress, taskId)
+  })
+
+program
+  .command('connections')
+  .description('Get list of connections to the broker')
+  .option('-a, --address <brokerAddress>', 'The address of the broker')
+  .action((options) => {
+    const brokerAddress = options.address
+
+    if (!brokerAddress) {
+      console.error('Broker address is required')
+      process.exit(1)
+    }
+
+    void connectionsCommand(brokerAddress)
   })
 
 program.parse(process.argv)

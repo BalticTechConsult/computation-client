@@ -13,6 +13,7 @@ service Broker {
   rpc Clear(google.protobuf.Empty) returns (ClearResponse);
   rpc GetTasks(google.protobuf.Empty) returns (TasksResponse);
   rpc GetSolutions(SolutionsRequest) returns (SolutionsResponse);
+  rpc GetConnections(google.protobuf.Empty) returns (ConnectionsResponse);
 }
 
 message SolutionsRequest {
@@ -109,4 +110,14 @@ message Solution {
   double time = 4;
   double execution_time = 5;
   int32 result_code = 6;
+}
+
+message ConnectionsResponse {
+  string current_time = 1;
+  repeated ConnectionInfo connections = 2;
+}
+
+message ConnectionInfo {
+  string node_id = 1;
+  string last_seen = 2;
 }

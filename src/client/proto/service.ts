@@ -116,6 +116,16 @@ export interface Solution {
   resultCode: number;
 }
 
+export interface ConnectionsResponse {
+  currentTime: string;
+  connections: ConnectionInfo[];
+}
+
+export interface ConnectionInfo {
+  nodeId: string;
+  lastSeen: string;
+}
+
 function createBaseSolutionsRequest(): SolutionsRequest {
   return { id: "" };
 }
@@ -1503,6 +1513,156 @@ export const Solution = {
   },
 };
 
+function createBaseConnectionsResponse(): ConnectionsResponse {
+  return { currentTime: "", connections: [] };
+}
+
+export const ConnectionsResponse = {
+  encode(message: ConnectionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.currentTime !== "") {
+      writer.uint32(10).string(message.currentTime);
+    }
+    for (const v of message.connections) {
+      ConnectionInfo.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionsResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseConnectionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.currentTime = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.connections.push(ConnectionInfo.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ConnectionsResponse {
+    return {
+      currentTime: isSet(object.currentTime) ? globalThis.String(object.currentTime) : "",
+      connections: globalThis.Array.isArray(object?.connections)
+        ? object.connections.map((e: any) => ConnectionInfo.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: ConnectionsResponse): unknown {
+    const obj: any = {};
+    if (message.currentTime !== "") {
+      obj.currentTime = message.currentTime;
+    }
+    if (message.connections?.length) {
+      obj.connections = message.connections.map((e) => ConnectionInfo.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ConnectionsResponse>, I>>(base?: I): ConnectionsResponse {
+    return ConnectionsResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ConnectionsResponse>, I>>(object: I): ConnectionsResponse {
+    const message = createBaseConnectionsResponse();
+    message.currentTime = object.currentTime ?? "";
+    message.connections = object.connections?.map((e) => ConnectionInfo.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseConnectionInfo(): ConnectionInfo {
+  return { nodeId: "", lastSeen: "" };
+}
+
+export const ConnectionInfo = {
+  encode(message: ConnectionInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.nodeId !== "") {
+      writer.uint32(10).string(message.nodeId);
+    }
+    if (message.lastSeen !== "") {
+      writer.uint32(18).string(message.lastSeen);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionInfo {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseConnectionInfo();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.nodeId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.lastSeen = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ConnectionInfo {
+    return {
+      nodeId: isSet(object.nodeId) ? globalThis.String(object.nodeId) : "",
+      lastSeen: isSet(object.lastSeen) ? globalThis.String(object.lastSeen) : "",
+    };
+  },
+
+  toJSON(message: ConnectionInfo): unknown {
+    const obj: any = {};
+    if (message.nodeId !== "") {
+      obj.nodeId = message.nodeId;
+    }
+    if (message.lastSeen !== "") {
+      obj.lastSeen = message.lastSeen;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ConnectionInfo>, I>>(base?: I): ConnectionInfo {
+    return ConnectionInfo.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ConnectionInfo>, I>>(object: I): ConnectionInfo {
+    const message = createBaseConnectionInfo();
+    message.nodeId = object.nodeId ?? "";
+    message.lastSeen = object.lastSeen ?? "";
+    return message;
+  },
+};
+
 export type BrokerService = typeof BrokerService;
 export const BrokerService = {
   ping: {
@@ -1559,6 +1719,15 @@ export const BrokerService = {
     responseSerialize: (value: SolutionsResponse) => Buffer.from(SolutionsResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => SolutionsResponse.decode(value),
   },
+  getConnections: {
+    path: "/broker.Broker/GetConnections",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    responseSerialize: (value: ConnectionsResponse) => Buffer.from(ConnectionsResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ConnectionsResponse.decode(value),
+  },
 } as const;
 
 export interface BrokerServer extends UntypedServiceImplementation {
@@ -1568,6 +1737,7 @@ export interface BrokerServer extends UntypedServiceImplementation {
   clear: handleUnaryCall<Empty, ClearResponse>;
   getTasks: handleUnaryCall<Empty, TasksResponse>;
   getSolutions: handleUnaryCall<SolutionsRequest, SolutionsResponse>;
+  getConnections: handleUnaryCall<Empty, ConnectionsResponse>;
 }
 
 export interface BrokerClient extends Client {
@@ -1651,6 +1821,21 @@ export interface BrokerClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: SolutionsResponse) => void,
+  ): ClientUnaryCall;
+  getConnections(
+    request: Empty,
+    callback: (error: ServiceError | null, response: ConnectionsResponse) => void,
+  ): ClientUnaryCall;
+  getConnections(
+    request: Empty,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ConnectionsResponse) => void,
+  ): ClientUnaryCall;
+  getConnections(
+    request: Empty,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ConnectionsResponse) => void,
   ): ClientUnaryCall;
 }
 
