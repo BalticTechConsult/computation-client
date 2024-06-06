@@ -31,7 +31,7 @@
       "./node_modules/@types"
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
   },
   "exclude": ["tests", "tools"],

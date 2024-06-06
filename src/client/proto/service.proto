@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package broker;
+
+option go_package = "broker/proto;brokerpb";
+
+import "google/protobuf/empty.proto";
+
+service Broker {
+  rpc Ping(google.protobuf.Empty) returns (PingResponse);
+  rpc Solve(TaskOrOptimizationTask) returns (TaskIdResponse);
+  rpc Delete(TaskIdRequest) returns (DeleteResponse);
+  rpc Clear(google.protobuf.Empty) returns (ClearResponse);
+  rpc GetTasks(google.protobuf.Empty) returns (TasksResponse);
+  rpc GetSolutions(SolutionsRequest) returns (SolutionsResponse);
+  rpc GetConnections(google.protobuf.Empty) returns (ConnectionsResponse);
+}
+
+message SolutionsRequest {
+  string id = 1;
+}
+
+message SolutionsResponse {
+  repeated Solution solutions = 1;
+}
+
+message TaskInfo {
+  string id = 1;
+  int32 solution_count = 2;
+  bool is_pending = 3;
+}
+
+message TasksResponse {
+  repeated TaskInfo tasks = 1;
+}
+
+message ClearResponse {
+  string message = 1;
+}
+
+message PingResponse {
+  string message = 1;
+}
+
+message TaskIdRequest {
+  string id = 1;
+}
+
+message DeleteResponse {
+  string message = 1;
+}
+
+message Task {
+  Settings settings = 1;
+  repeated MatrixRecord matrix = 2;
+  repeated Point points = 3;
+  string start_point_id = 4;
+}
+
+message OptimizationTask {
+  Settings settings = 1;
+  repeated MatrixRecord matrix = 2;
+  repeated Point points = 3;
+  string start_point_id = 4;
+  repeated Route routes = 5;
+}
+
+message Route {
+  repeated string points = 1;
+}
+
+message TaskOrOptimizationTask {
+  oneof task_type {
+    Task task = 1;
+    OptimizationTask optimization_task = 2;
+  }
+}
+
+message TaskIdResponse {
+  string id = 1;
+}
+
+message Settings {
+  int32 routes = 1;
+  int32 looped_routes = 2;
+  int32 min_pir = 3;
+  int32 max_pir = 4;
+  int32 fmri = 5;
+  int32 lmri = 6;
+}
+
+message MatrixRecord {
+  string id_from = 1;
+  string id_to = 2;
+  double distance = 3;
+  double time = 4;
+}
+
+message Point {
+  string id = 1;
+  int32 priority = 2;
+  float lat = 3;
+  float lon = 4;
+}
+
+message Solution {
+  string id = 1;
+  repeated Route routes = 2;
+  double distance = 3;
+  double time = 4;
+  double execution_time = 5;
+  int32 result_code = 6;
+}
+
+message ConnectionsResponse {
+  string current_time = 1;
+  repeated ConnectionInfo connections = 2;
+}
+
+message ConnectionInfo {
+  string node_id = 1;
+  string last_seen = 2;
+}
