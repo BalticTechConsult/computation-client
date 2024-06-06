@@ -6,7 +6,6 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFiles: ['dotenv/config'],
   moduleNameMapper: {
-    '^@client(.*)$': '<rootDir>/src/client$1',
-    '^@commands(.*)$': '<rootDir>/src/commands$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   }
 }

@@ -1,12 +1,9 @@
 import { readFileSync } from 'fs'
-import { ServiceError } from '@grpc/grpc-js'
 
-import { OptimizationTask, TaskOrOptimizationTask } from '@client/proto/service'
-import { Client } from '@client'
+import { OptimizationTask, TaskOrOptimizationTask } from '@/client/proto/service'
+import { Client } from '@/client'
+import { isServiceError } from '@/helpers'
 
-const isServiceError = (error: unknown): error is ServiceError => {
-  return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
-}
 
 const isOptimizationTask = (task: any): task is OptimizationTask => {
   return 'routes' in task

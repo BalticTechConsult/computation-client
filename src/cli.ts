@@ -10,7 +10,7 @@ import {
   tasksCommand,
   solutionsCommand,
   connectionsCommand
-} from '@commands'
+} from '@/commands'
 
 
 const program = new Command()

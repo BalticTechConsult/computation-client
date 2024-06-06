@@ -1,14 +1,13 @@
-import { Client } from '@client'
-import { ServiceError } from '@grpc/grpc-js'
+import { Client } from '@/client'
+import { isServiceError } from '@/helpers'
 
-const isServiceError = (error: unknown): error is ServiceError => {
-  return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
-}
 
 export async function connectionsCommand(brokerAddress: string) {
   const client = new Client(brokerAddress)
+
   try {
-    const response = await client.getConnections()
+    const response = await client.connections()
+
     console.log('Connections response:', JSON.stringify(response.connections, null, 2))
     console.log('Current time:', response.currentTime)
   } catch (error) {

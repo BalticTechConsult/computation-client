@@ -320,8 +320,8 @@
     {
       "idFrom": "0",
       "idTo": "0",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "0",
@@ -632,8 +632,8 @@
     {
       "idFrom": "1",
       "idTo": "1",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "1",
@@ -944,8 +944,8 @@
     {
       "idFrom": "KKKF",
       "idTo": "KKKF",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "KKKF",
@@ -1256,8 +1256,8 @@
     {
       "idFrom": "3",
       "idTo": "3",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "3",
@@ -1568,8 +1568,8 @@
     {
       "idFrom": "4",
       "idTo": "4",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "4",
@@ -1880,8 +1880,8 @@
     {
       "idFrom": "5",
       "idTo": "5",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "5",
@@ -2192,8 +2192,8 @@
     {
       "idFrom": "6",
       "idTo": "6",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "6",
@@ -2504,8 +2504,8 @@
     {
       "idFrom": "7",
       "idTo": "7",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "7",
@@ -2816,8 +2816,8 @@
     {
       "idFrom": "8",
       "idTo": "8",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "8",
@@ -3128,8 +3128,8 @@
     {
       "idFrom": "9",
       "idTo": "9",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "9",
@@ -3440,8 +3440,8 @@
     {
       "idFrom": "10",
       "idTo": "10",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "10",
@@ -3752,8 +3752,8 @@
     {
       "idFrom": "11",
       "idTo": "11",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "11",
@@ -4064,8 +4064,8 @@
     {
       "idFrom": "12",
       "idTo": "12",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "12",
@@ -4376,8 +4376,8 @@
     {
       "idFrom": "13",
       "idTo": "13",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "13",
@@ -4688,8 +4688,8 @@
     {
       "idFrom": "14",
       "idTo": "14",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "14",
@@ -5000,8 +5000,8 @@
     {
       "idFrom": "15",
       "idTo": "15",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "15",
@@ -5312,8 +5312,8 @@
     {
       "idFrom": "16",
       "idTo": "16",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "16",
@@ -5624,8 +5624,8 @@
     {
       "idFrom": "17",
       "idTo": "17",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "17",
@@ -5936,8 +5936,8 @@
     {
       "idFrom": "18",
       "idTo": "18",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "18",
@@ -6248,8 +6248,8 @@
     {
       "idFrom": "19",
       "idTo": "19",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "19",
@@ -6560,8 +6560,8 @@
     {
       "idFrom": "20",
       "idTo": "20",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "20",
@@ -6872,8 +6872,8 @@
     {
       "idFrom": "21",
       "idTo": "21",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "21",
@@ -7184,8 +7184,8 @@
     {
       "idFrom": "22",
       "idTo": "22",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "22",
@@ -7496,8 +7496,8 @@
     {
       "idFrom": "23",
       "idTo": "23",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "23",
@@ -7808,8 +7808,8 @@
     {
       "idFrom": "24",
       "idTo": "24",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "24",
@@ -8120,8 +8120,8 @@
     {
       "idFrom": "25",
       "idTo": "25",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "25",
@@ -8432,8 +8432,8 @@
     {
       "idFrom": "26",
       "idTo": "26",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "26",
@@ -8744,8 +8744,8 @@
     {
       "idFrom": "27",
       "idTo": "27",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "27",
@@ -9056,8 +9056,8 @@
     {
       "idFrom": "28",
       "idTo": "28",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "28",
@@ -9368,8 +9368,8 @@
     {
       "idFrom": "29",
       "idTo": "29",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "29",
@@ -9680,8 +9680,8 @@
     {
       "idFrom": "30",
       "idTo": "30",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "30",
@@ -9992,8 +9992,8 @@
     {
       "idFrom": "31",
       "idTo": "31",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "31",
@@ -10304,8 +10304,8 @@
     {
       "idFrom": "32",
       "idTo": "32",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "32",
@@ -10616,8 +10616,8 @@
     {
       "idFrom": "33",
       "idTo": "33",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "33",
@@ -10928,8 +10928,8 @@
     {
       "idFrom": "34",
       "idTo": "34",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "34",
@@ -11240,8 +11240,8 @@
     {
       "idFrom": "35",
       "idTo": "35",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "35",
@@ -11552,8 +11552,8 @@
     {
       "idFrom": "36",
       "idTo": "36",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "36",
@@ -11864,8 +11864,8 @@
     {
       "idFrom": "37",
       "idTo": "37",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "37",
@@ -12176,8 +12176,8 @@
     {
       "idFrom": "38",
       "idTo": "38",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "38",
@@ -12488,8 +12488,8 @@
     {
       "idFrom": "39",
       "idTo": "39",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "39",
@@ -12800,8 +12800,8 @@
     {
       "idFrom": "40",
       "idTo": "40",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "40",
@@ -13112,8 +13112,8 @@
     {
       "idFrom": "41",
       "idTo": "41",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "41",
@@ -13424,8 +13424,8 @@
     {
       "idFrom": "42",
       "idTo": "42",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "42",
@@ -13736,8 +13736,8 @@
     {
       "idFrom": "43",
       "idTo": "43",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "43",
@@ -14048,8 +14048,8 @@
     {
       "idFrom": "44",
       "idTo": "44",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "44",
@@ -14360,8 +14360,8 @@
     {
       "idFrom": "45",
       "idTo": "45",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "45",
@@ -14672,8 +14672,8 @@
     {
       "idFrom": "46",
       "idTo": "46",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "46",
@@ -14984,8 +14984,8 @@
     {
       "idFrom": "47",
       "idTo": "47",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "47",
@@ -15296,8 +15296,8 @@
     {
       "idFrom": "48",
       "idTo": "48",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "48",
@@ -15608,8 +15608,8 @@
     {
       "idFrom": "49",
       "idTo": "49",
-      "distance": null,
-      "time": null
+      "distance": 0,
+      "time": 0
     },
     {
       "idFrom": "49",

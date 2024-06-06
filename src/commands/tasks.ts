@@ -1,10 +1,6 @@
-import { Client } from '@client'
-import { ServiceError } from '@grpc/grpc-js'
+import { Client } from '@/client'
+import { isServiceError } from '@/helpers'
 
-
-const isServiceError = (error: unknown): error is ServiceError => {
-  return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
-}
 
 export async function tasksCommand(brokerAddress: string) {
   const client = new Client(brokerAddress)

@@ -1,11 +1,6 @@
-import { ServiceError } from '@grpc/grpc-js'
+import { Client } from '@/client'
+import { isServiceError } from '@/helpers'
 
-import { Client } from '@client'
-
-
-const isServiceError = (error: unknown): error is ServiceError => {
-  return typeof error === 'object' && error !== null && 'code' in error && 'message' in error
-}
 
 export async function deleteCommand(brokerAddress: string, taskId: string) {
   const client = new Client(brokerAddress)

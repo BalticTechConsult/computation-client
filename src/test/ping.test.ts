@@ -1,7 +1,7 @@
-import { pingCommand } from '@commands'
+import { pingCommand } from '@/commands'
 
 
-describe('pingCommand', () => {
+describe('ping', () => {
   const validAddress = process.env.BROKER_ADDRESS ?? 'localhost:50051'
   const invalidAddress = 'localhost:12345'
 
