@@ -2,10 +2,13 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import dts from 'vite-plugin-dts'
+import nodeExternals from 'rollup-plugin-node-externals'
+
 
 const clientConfig = defineConfig({
   plugins: [
     tsconfigPaths(),
+    nodeExternals(),
     dts({
       outDir: 'dist/types',
       entryRoot: 'src',
@@ -24,24 +27,6 @@ const clientConfig = defineConfig({
         if (warning.code === 'EVAL') return;
         warn(warning);
       },
-      external: [
-        'tls',
-        'net',
-        'fs',
-        'http2',
-        'zlib',
-        'http',
-        'https',
-        'stream',
-        'crypto',
-        'os',
-        'path',
-        'dns',
-        'util',
-        'events',
-        'process',
-        'url'
-      ],
     }
   }
 })
@@ -49,6 +34,7 @@ const clientConfig = defineConfig({
 const cliConfig = defineConfig({
   plugins: [
     tsconfigPaths(),
+    nodeExternals(),
   ],
   build: {
     outDir: 'dist',
@@ -65,27 +51,6 @@ const cliConfig = defineConfig({
       output: {
         entryFileNames: '[name].cjs',
       },
-      external: [
-        'node:process',
-        'node:fs',
-        'node:events',
-        'node:child_process',
-        'node:path',
-        'tls',
-        'process',
-        'http2',
-        'util',
-        'net',
-        'dns',
-        'zlib',
-        'events',
-        'stream',
-        'fs',
-        'os',
-        'http',
-        'url',
-        'path'
-      ],
     }
   }
 })

@@ -1,0 +1,51 @@
+{
+  "startPointId": "0",
+  "settings": {
+    "routes": 1,
+    "loopedRoutes": 0,
+    "minPir": 1,
+    "maxPir": 20,
+    "fmri": 3,
+    "lmri": 3
+  },
+  "points": [
+    {
+      "id": "0",
+      "priority": 0,
+      "lat": 52.300457,
+      "lon": 21.013006
+    },
+    {
+      "id": "1",
+      "priority": 0,
+      "lat": 51.226642,
+      "lon": 22.531105
+    }
+  ],
+  "matrix": [
+    {
+      "idFrom": "0",
+      "idTo": "0",
+      "distance": 0,
+      "time": 0
+    },
+    {
+      "idFrom": "0",
+      "idTo": "1",
+      "distance": 181051.3,
+      "time": 181051.3
+    },
+    {
+      "idFrom": "1",
+      "idTo": "0",
+      "distance": 180588.2,
+      "time": 180588.2
+    },
+    {
+      "idFrom": "1",
+      "idTo": "1",
+      "distance": 0,
+      "time": 0
+    }
+  ]
+}
