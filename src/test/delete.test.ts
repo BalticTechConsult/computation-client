@@ -6,7 +6,7 @@ import optimizationTask from './test-data/optimization-task.json'
 
 describe('delete', () => {
   const brokerAddress = process.env.BROKER_ADDRESS ?? 'localhost:50051'
-  const client = new Client(brokerAddress)
+  const client = new Client(brokerAddress, process.env.CERT!, process.env.KEY!)
 
   it('should be deleted from the list of tasks', async () => {
     const id = await client.solve({ task })

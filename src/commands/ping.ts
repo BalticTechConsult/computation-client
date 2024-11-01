@@ -2,8 +2,12 @@ import { Client } from '@/client'
 import { isServiceError } from '@/helpers'
 
 
-export async function pingCommand(brokerAddress: string) {
-  const client = new Client(brokerAddress)
+export async function pingCommand(
+  brokerAddress: string,
+  certPath: string,
+  keyPath: string,
+) {
+  const client = new Client(brokerAddress, certPath, keyPath)
 
   try {
     const message = await client.ping()

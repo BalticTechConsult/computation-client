@@ -2,8 +2,13 @@ import { Client } from '@/client'
 import { isServiceError } from '@/helpers'
 
 
-export async function deleteCommand(brokerAddress: string, taskId: string) {
-  const client = new Client(brokerAddress)
+export async function deleteCommand(
+  brokerAddress: string,
+  taskId: string,
+  certPath: string,
+  keyPath: string,
+) {
+  const client = new Client(brokerAddress, certPath, keyPath)
 
   try {
     const responseMessage = await client.delete(taskId)

@@ -1,4 +1,5 @@
-import { ChannelCredentials } from '@grpc/grpc-js'
+import { credentials } from '@grpc/grpc-js'
+import { readFileSync } from 'fs'
 
 import { Empty } from './proto/google/protobuf/empty'
 import {
@@ -15,8 +16,24 @@ import {
 export class Client {
   private client: BrokerClient
 
-  constructor(address: string) {
-    this.client = new BrokerClient(address, ChannelCredentials.createInsecure())
+  constructor(
+    address: string,
+    certPath: string,
+    keyPath: string,
+  ) {
+    const clientCert = readFileSync(certPath)
+    const clientKey = readFileSync(keyPath)
+
+    const creds = credentials.createSsl(
+      null, // не проверяем сертификат брокера
+      clientKey,
+      clientCert,
+      {
+        rejectUnauthorized: false,
+      }
+    )
+
+    this.client = new BrokerClient(address, creds)
   }
 
   public async ping(): Promise<string> {

@@ -5,7 +5,7 @@ import task from './test-data/task.json'
 
 describe('solutions', () => {
   const brokerAddress = process.env.BROKER_ADDRESS ?? 'localhost:50051'
-  const client = new Client(brokerAddress)
+  const client = new Client(brokerAddress, process.env.CERT!, process.env.KEY!)
 
   it('should have a list of solutions', async () => {
     const id = await client.solve({ task })

@@ -9,7 +9,7 @@ describe('ping', () => {
     const logSpy = jest.spyOn(console, 'log').mockImplementation()
     const errorSpy = jest.spyOn(console, 'error').mockImplementation()
 
-    await pingCommand(validAddress)
+    await pingCommand(validAddress, process.env.CERT!, process.env.KEY!)
 
     expect(logSpy).toHaveBeenCalledWith('Ping response:', 'pong')
     expect(logSpy).toHaveBeenCalledWith('Broker is alive and well.')
@@ -23,7 +23,7 @@ describe('ping', () => {
     const logSpy = jest.spyOn(console, 'log').mockImplementation()
     const errorSpy = jest.spyOn(console, 'error').mockImplementation()
 
-    await pingCommand(invalidAddress)
+    await pingCommand(invalidAddress, process.env.CERT!, process.env.KEY!)
 
     expect(logSpy).not.toHaveBeenCalled()
     expect(errorSpy).toHaveBeenCalledWith('Broker is unavailable:')

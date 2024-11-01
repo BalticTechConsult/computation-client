@@ -2,8 +2,13 @@ import { Client } from '@/client'
 import { isServiceError } from '@/helpers'
 
 
-export async function tasksCommand(brokerAddress: string) {
-  const client = new Client(brokerAddress)
+export async function tasksCommand(
+  brokerAddress: string,
+  certPath: string,
+  keyPath: string,
+) {
+  const client = new Client(brokerAddress, certPath, keyPath)
+
   try {
     const response = await client.tasks()
     console.log('Tasks response:', JSON.stringify(response.tasks, null, 2))

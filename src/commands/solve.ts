@@ -20,8 +20,14 @@ const loadTaskFromFile = (filePath: string): TaskOrOptimizationTask => {
   }
 }
 
-export async function solveCommand(brokerAddress: string, filePath: string) {
-  const client = new Client(brokerAddress)
+export async function solveCommand(
+  brokerAddress: string,
+  filePath: string,
+  certPath: string,
+  keyPath: string,
+) {
+  const client = new Client(brokerAddress, certPath, keyPath)
+
   try {
     const task = loadTaskFromFile(filePath)
     const taskId = await client.solve(task)

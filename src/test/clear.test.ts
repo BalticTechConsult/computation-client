@@ -5,7 +5,7 @@ import optimizationTask from './test-data/optimization-task.json'
 
 describe('clear', () => {
   const brokerAddress = process.env.BROKER_ADDRESS ?? 'localhost:50051'
-  const client = new Client(brokerAddress)
+  const client = new Client(brokerAddress, process.env.CERT!, process.env.KEY!)
 
   it('should return empty tasks after clearing', async () => {
     await client.solve({ optimizationTask })
